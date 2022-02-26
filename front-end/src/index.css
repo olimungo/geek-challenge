@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: grey;
+}
+
+button {
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  background-color: #325674;
+  color: aliceblue;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 0.4rem;
+}
+
+label {
+  font-size: 1.3rem;
+}
+
+input {
+  height: 2rem;
+  font-size: 1.3rem;
+  border-radius: 15rem;
+  border: none;
+  padding: 0.2rem 1rem;
+}

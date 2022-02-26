@@ -1,0 +1,14 @@
+.people-list {
+  margin: 2rem;
+  width: 25rem;
+}
+
+.people-list li {
+  background-color: #e9952d;
+  margin: 1rem;
+  padding: 1rem;
+  list-style-type: none;
+  border-radius: 0.3rem;
+  font-size: 1.4rem;
+  cursor: pointer;
+}

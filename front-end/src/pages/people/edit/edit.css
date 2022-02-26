@@ -1,0 +1,26 @@
+.people-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 2rem;
+}
+
+.people-margin-bottom {
+  margin-bottom: 1rem;
+}
+
+.people-margin-right {
+  margin-right: 1rem;
+}
+
+.people-edit .actions {
+  display: flex;
+}
+
+.people-edit .actions .delete {
+  background-color: red;
+}
+
+.people-edit .actions .back {
+  background-color: rgb(56, 56, 56);
+}
