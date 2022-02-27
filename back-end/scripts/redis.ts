@@ -1,26 +1,19 @@
-import * as redis from 'redis';
+import { createClient } from 'redis';
 const { promisify } = require('util');
 
-const REDIS_URL = process.env.REDIS_URL || 'redis://localhost';
-const redisClient = redis.createClient(REDIS_URL);
+const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6380';
 
-redisClient.on('error', (error) => {
+console.log(`> Connecting to ${REDIS_URL}`);
+
+const redis = createClient({ url: REDIS_URL });
+redis.connect();
+
+redis.on('error', (error) => {
     if (error.code === 'ECONNREFUSED' || error.code === 'ENOTFOUND') {
         console.log('> Redis container not yet available...');
     }
 });
 
-redisClient.on('connect', () =>
-    console.log(`> Connected to Redis on ${REDIS_URL} `)
-);
+redis.on('connect', () => console.log(`> Connected to Redis`));
 
-export default {
-    ...redisClient,
-    getAsync: promisify(redisClient.get).bind(redisClient),
-    setAsync: promisify(redisClient.set).bind(redisClient),
-    keysAsync: promisify(redisClient.keys).bind(redisClient),
-    delAsync: promisify(redisClient.del).bind(redisClient),
-    saddAsync: promisify(redisClient.sadd).bind(redisClient),
-    smembersAsync: promisify(redisClient.smembers).bind(redisClient),
-    sremAsync: promisify(redisClient.srem).bind(redisClient),
-};
+export default redis;

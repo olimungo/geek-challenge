@@ -4,9 +4,18 @@
     "description": "",
     "main": "server.ts",
     "scripts": {
-        "start": "docker system prune -f;docker-compose up --build -d",
+        "start": "docker system prune -f; docker-compose up -d",
         "stop": "docker-compose down; docker system prune -f",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "back-end": "npm start --prefix back-end",
+        "front-end": "npm start --prefix front-end",
+        "test": "docker system prune -f; npm run build; docker-compose -f docker-compose.test.yml up -d",
+        "stop-test": "docker-compose -f docker-compose.test.yml down; docker system prune -f",
+        "build": "npm run build-back-end; npm run build-front-end",
+        "build-rpi": "npm run build-back-end-rpi; npm run build-front-end-rpi",
+        "build-back-end": "npm run build --prefix back-end",
+        "build-back-end-rpi": "npm run build-rpi --prefix back-end",
+        "build-front-end": "npm run build --prefix front-end",
+        "build-front-end-rpi": "npm run build-rpi --prefix front-end"
     },
     "keywords": [],
     "author": "",

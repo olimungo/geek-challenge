@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+    redis:
+        image: arm32v7/redis
+        container_name: geek-redis
+        command: redis-server --appendonly yes
+        volumes:
+            - ./database:/data
+        ports:
+            - 6380:6379
+    back-end:
+        image: olimungo/geek-back-end:latest
+        container_name: geek-back-end
+        ports:
+            - 9100:9000
+        environment:
+            - NODE_ENV=production
+            - REDIS_URL=redis://geek-redis
+            - CORS_ORIGIN=*
+    front-end:
+        image: olimungo/geek-front-end:latest
+        container_name: geek-front-end
+        ports:
+            - 8080:80
+        environment:
+            - NODE_ENV=production
