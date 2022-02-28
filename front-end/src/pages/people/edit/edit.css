@@ -1,26 +1,36 @@
 .people-edit {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 2rem;
 }
 
 .people-margin-bottom {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .people-margin-right {
-  margin-right: 1rem;
+    margin-right: 1rem;
 }
 
 .people-edit .actions {
-  display: flex;
+    display: flex;
 }
 
 .people-edit .actions .delete {
-  background-color: red;
+    background-color: red;
 }
 
 .people-edit .actions .back {
-  background-color: rgb(56, 56, 56);
+    background-color: rgb(56, 56, 56);
+}
+
+.people-edit label {
+    width: 7rem;
+    display: inline-block;
+    text-align: left;
+}
+
+.people-edit input {
+    width: 25rem;
 }

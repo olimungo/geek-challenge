@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormEvent, useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './edit.css';
 
 type Person = {
@@ -13,7 +13,7 @@ type Person = {
 };
 
 function PeopleEdit() {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     const [firstname, setFirstname] = useState<string | undefined>('');
     const [lastname, setLastname] = useState<string | undefined>('');
@@ -58,7 +58,7 @@ function PeopleEdit() {
             }
         )
             .then((res) => res.json())
-            .then((res) => history.push('/people'));
+            .then((res) => navigate('/people'));
     };
 
     const handleDelete = () => {
@@ -67,7 +67,7 @@ function PeopleEdit() {
             {
                 method: 'DELETE',
             }
-        ).then(() => history.push('/people'));
+        ).then(() => navigate('/people'));
     };
 
     return (
@@ -77,6 +77,7 @@ function PeopleEdit() {
                     First name
                 </label>
                 <input
+                    className="input input-bordered w-full max-w-xs"
                     id="firstname"
                     type="text"
                     value={firstname}
@@ -89,6 +90,7 @@ function PeopleEdit() {
                     Last name
                 </label>
                 <input
+                    className="input input-bordered w-full max-w-xs"
                     id="lastname"
                     name="lastname"
                     type="text"
@@ -102,6 +104,7 @@ function PeopleEdit() {
                     Address
                 </label>
                 <input
+                    className="input input-bordered w-full max-w-xs"
                     id="address"
                     name="address"
                     type="text"
@@ -115,6 +118,7 @@ function PeopleEdit() {
                     City
                 </label>
                 <input
+                    className="input input-bordered w-full max-w-xs"
                     id="city"
                     name="city"
                     type="text"
@@ -128,6 +132,7 @@ function PeopleEdit() {
                     Country
                 </label>
                 <input
+                    className="input input-bordered w-full max-w-xs"
                     id="country"
                     name="country"
                     type="text"
@@ -138,20 +143,24 @@ function PeopleEdit() {
 
             <div className="actions">
                 <button
-                    className="back people-margin-right"
+                    className="btn people-margin-right"
                     type="button"
-                    onClick={() => history.push('/people')}
+                    onClick={() => navigate('/people')}
                 >
                     BACK
                 </button>
+
                 <button
-                    className="delete people-margin-right"
+                    className="btn btn-secondary people-margin-right"
                     type="button"
                     onClick={handleDelete}
                 >
                     DELETE
                 </button>
-                <button type="submit">SUBMIT</button>
+
+                <button className="btn btn-primary" type="submit">
+                    SUBMIT
+                </button>
             </div>
         </form>
     );

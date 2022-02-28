@@ -1,10 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './list.css';
 
 function PeopleList() {
-    const history = useHistory();
+    const navigate = useNavigate();
     const [people, setPeople] = useState<any[]>([]);
 
     useEffect(() => {
@@ -15,7 +15,7 @@ function PeopleList() {
             .then((people) => setPeople(people));
     }, []);
 
-    const handleSelect = (id: string) => history.push(`/people/${id}`);
+    const handleSelect = (id: string) => navigate(`/people/${id}`);
 
     return (
         <div className="people-list">
@@ -23,6 +23,7 @@ function PeopleList() {
                 {people.map((person) => {
                     return (
                         <li
+                            className="bg-orange-400"
                             key={person.id}
                             onClick={() => handleSelect(person.id)}
                         >
@@ -32,7 +33,11 @@ function PeopleList() {
                 })}
             </ul>
 
-            <button type="button" onClick={() => handleSelect('new')}>
+            <button
+                type="button"
+                className="btn btn-primary mt-10"
+                onClick={() => handleSelect('new')}
+            >
                 ADD NEW
             </button>
         </div>
