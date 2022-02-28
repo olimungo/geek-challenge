@@ -1,6 +1,7 @@
-import React from 'react';
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { MdArrowBack, MdCheck, MdDelete } from 'react-icons/md';
+import { RiCheckDoubleFill } from 'react-icons/ri';
 import './edit.css';
 
 type Person = {
@@ -73,7 +74,10 @@ function PeopleEdit() {
     return (
         <form className="people-edit" onSubmit={handleSubmit}>
             <div className="people-margin-bottom">
-                <label className="people-margin-right" htmlFor="firstname">
+                <label
+                    className="people-label people-margin-right"
+                    htmlFor="firstname"
+                >
                     First name
                 </label>
                 <input
@@ -86,7 +90,10 @@ function PeopleEdit() {
             </div>
 
             <div className="people-margin-bottom">
-                <label className="people-margin-right" htmlFor="lastname">
+                <label
+                    className="people-label people-margin-right"
+                    htmlFor="lastname"
+                >
                     Last name
                 </label>
                 <input
@@ -100,7 +107,10 @@ function PeopleEdit() {
             </div>
 
             <div className="people-margin-bottom">
-                <label className="people-margin-right" htmlFor="address">
+                <label
+                    className="people-label people-margin-right"
+                    htmlFor="address"
+                >
                     Address
                 </label>
                 <input
@@ -114,7 +124,10 @@ function PeopleEdit() {
             </div>
 
             <div className="people-margin-bottom">
-                <label className="people-margin-right" htmlFor="city">
+                <label
+                    className="people-label people-margin-right"
+                    htmlFor="city"
+                >
                     City
                 </label>
                 <input
@@ -128,7 +141,10 @@ function PeopleEdit() {
             </div>
 
             <div className="people-margin-bottom">
-                <label className="people-margin-right" htmlFor="country">
+                <label
+                    className="people-label people-margin-right"
+                    htmlFor="country"
+                >
                     Country
                 </label>
                 <input
@@ -147,19 +163,37 @@ function PeopleEdit() {
                     type="button"
                     onClick={() => navigate('/people')}
                 >
-                    BACK
+                    <MdArrowBack size="1.5rem" className="mr-2" /> CANCEL
                 </button>
 
-                <button
-                    className="btn btn-secondary people-margin-right"
-                    type="button"
-                    onClick={handleDelete}
-                >
-                    DELETE
-                </button>
+                {id !== 'new' && (
+                    <div className="dropdown">
+                        <label
+                            tabIndex={0}
+                            className="btn btn-secondary people-margin-right flex"
+                        >
+                            <MdDelete size="1.5rem" className="mr-2" /> DELETE
+                        </label>
+
+                        <ul
+                            tabIndex={0}
+                            className="shadow menu dropdown-content bg-secondary rounded-box w-52"
+                        >
+                            <li onClick={handleDelete}>
+                                <a>
+                                    <RiCheckDoubleFill
+                                        size="1.5rem"
+                                        className="mr-2"
+                                    />
+                                    CONFIRM
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                )}
 
                 <button className="btn btn-primary" type="submit">
-                    SUBMIT
+                    <MdCheck size="1.5rem" className="mr-2" /> SAVE
                 </button>
             </div>
         </form>

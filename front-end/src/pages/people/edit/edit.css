@@ -25,7 +25,7 @@
     background-color: rgb(56, 56, 56);
 }
 
-.people-edit label {
+.people-label {
     width: 7rem;
     display: inline-block;
     text-align: left;

@@ -1,6 +1,6 @@
-import React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import './list.css';
 
 function PeopleList() {
@@ -23,7 +23,7 @@ function PeopleList() {
                 {people.map((person) => {
                     return (
                         <li
-                            className="bg-orange-400"
+                            className="bg-slate-300 text-slate-700"
                             key={person.id}
                             onClick={() => handleSelect(person.id)}
                         >
@@ -35,10 +35,11 @@ function PeopleList() {
 
             <button
                 type="button"
-                className="btn btn-primary mt-10"
+                className="btn btn-primary mt-10 text-xl"
                 onClick={() => handleSelect('new')}
             >
-                ADD NEW
+                <MdOutlineAddCircleOutline size="1.5rem" className="mr-2" /> ADD
+                NEW
             </button>
         </div>
     );
