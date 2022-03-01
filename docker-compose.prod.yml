@@ -11,6 +11,8 @@ services:
     back-end:
         image: olimungo/geek-back-end:latest
         container_name: geek-back-end
+        volumes:
+            - ./avatars:/usr/src/app/avatars
         ports:
             - 9100:9000
         environment:
