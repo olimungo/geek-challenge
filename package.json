@@ -9,6 +9,7 @@
         "back-end": "npm start --prefix back-end",
         "front-end": "npm start --prefix front-end",
         "test": "docker system prune -f; npm run build; docker-compose -f docker-compose.test.yml up -d",
+        "start-test": "docker system prune -f; docker-compose -f docker-compose.test.yml up -d",
         "stop-test": "docker-compose -f docker-compose.test.yml down; docker system prune -f",
         "build": "npm run build-back-end; npm run build-front-end",
         "build-rpi": "npm run build-back-end-rpi; npm run build-front-end-rpi",
