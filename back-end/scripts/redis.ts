@@ -1,7 +1,7 @@
 import { createClient } from 'redis';
 const { promisify } = require('util');
 
-const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6380';
+const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
 
 console.log(`> Connecting to ${REDIS_URL}`);
 

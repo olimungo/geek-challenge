@@ -8,5 +8,6 @@ COPY package*.json ./
 RUN npm i
 
 COPY build scripts
+COPY scripts/assets scripts/assets
 
 CMD [ "npm", "run", "start-prod" ]

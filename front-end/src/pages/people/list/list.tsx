@@ -3,6 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import './list.css';
 
+type Person = {
+    id: string;
+    firstname: string;
+    lastname: string;
+    address: string;
+    city: string;
+    country: string;
+};
+
 function PeopleList() {
     const navigate = useNavigate();
     const [people, setPeople] = useState<any[]>([]);
@@ -12,7 +21,15 @@ function PeopleList() {
             `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people`
         )
             .then((response) => response.json())
-            .then((people) => setPeople(people));
+            .then((people: Person[]) =>
+                setPeople(
+                    people.sort((a, b) =>
+                        a.firstname + a.lastname > b.firstname + b.lastname
+                            ? 1
+                            : -1
+                    )
+                )
+            );
     }, []);
 
     const handleSelect = (id: string) => navigate(`/people/${id}`);
