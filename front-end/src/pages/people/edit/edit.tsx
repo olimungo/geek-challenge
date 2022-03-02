@@ -1,10 +1,10 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { MdArrowBack, MdCheck, MdDelete, MdUpload } from 'react-icons/md';
-import { RiCheckDoubleFill } from 'react-icons/ri';
+import { MdUpload } from 'react-icons/md';
+import { Person } from 'models';
+import { CrudActions } from 'components';
 
-type Person = {
-    id: string;
+type State = {
     firstname: string;
     lastname: string;
     address: string;
@@ -12,61 +12,57 @@ type Person = {
     country: string;
 };
 
-function PeopleEdit() {
+const defaultState: State = {
+    firstname: '',
+    lastname: '',
+    address: '',
+    city: '',
+    country: '',
+};
+
+export function PeopleEdit() {
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
-    const [firstname, setFirstname] = useState<string | undefined>('');
-    const [lastname, setLastname] = useState<string | undefined>('');
-    const [address, setAddress] = useState<string | undefined>('');
-    const [city, setCity] = useState<string | undefined>('');
-    const [country, setCountry] = useState<string | undefined>('');
+    const [state, setState] = useState<State>(defaultState);
     const [selectedFile, setSelectedFile] = useState<File>();
     const backEnd = `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}`;
+    const form = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
         if (id !== 'new') {
             fetch(`${backEnd}/people/${id}`)
                 .then((response) => response.json())
                 .then((person: Person) => {
-                    setFirstname(person.firstname);
-                    setLastname(person.lastname);
-                    setAddress(person.address);
-                    setCity(person.city);
-                    setCountry(person.country);
+                    setState((state) => ({ ...state, ...person }));
                 });
         }
-    }, [id]);
+    }, [id, backEnd]);
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        fetch(`${backEnd}/people/${id}`, {
-            method: 'PUT',
-            headers: {
-                Accept: 'application/json, text/plain, */*',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                firstname,
-                lastname,
-                address,
-                city,
-                country,
-            }),
-        })
-            .then((response) => response.json())
-            .then(async (response) => {
-                if (selectedFile) {
-                    const data = new FormData();
-                    data.append('avatar', selectedFile);
-
-                    await fetch(`${backEnd}/people/${response.id}/avatar`, {
-                        method: 'POST',
-                        body: data,
-                    });
-                }
+        if (form) {
+            fetch(`${backEnd}/people/${id}`, {
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(state),
             })
-            .then(() => navigate('/people'));
+                .then((response) => response.json())
+                .then(async (response) => {
+                    if (selectedFile) {
+                        const data = new FormData();
+                        data.append('avatar', selectedFile);
+                        await fetch(`${backEnd}/people/${response.id}/avatar`, {
+                            method: 'POST',
+                            body: data,
+                        });
+                    }
+                })
+                .then(() => navigate('/people'));
+        }
     };
 
     const handleDelete = () => {
@@ -84,8 +80,19 @@ function PeopleEdit() {
         }
     };
 
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setState((state) => ({
+            ...state,
+            [event.target.name]: event.target.value,
+        }));
+    };
+
     return (
-        <form className="flex flex-col items-center" onSubmit={handleSubmit}>
+        <form
+            ref={form}
+            className="flex flex-col items-center"
+            onSubmit={handleSubmit}
+        >
             <div className="card w-11/12 sm:w-[37rem] bg-base-100 card-compact shadow-xl">
                 <div className="bg-slate-600">
                     <div className="my-5 mx-7 flex flex-col">
@@ -94,6 +101,7 @@ function PeopleEdit() {
                                 <img
                                     id="avatar"
                                     srcSet={`${backEnd}/people/${id}/avatar`}
+                                    alt="Avatar"
                                 />
                             </div>
                         </div>
@@ -102,14 +110,16 @@ function PeopleEdit() {
                                 className="w-[7rem] inline-block"
                                 htmlFor="firstname"
                             >
-                                First name
+                                First name <span>*</span>
                             </label>
 
                             <input
+                                name="firstname"
                                 className="input input-bordered w-full max-w-xs"
                                 type="text"
-                                value={firstname}
-                                onChange={(e) => setFirstname(e.target.value)}
+                                value={state.firstname}
+                                onChange={handleInputChange}
+                                required
                             />
                         </div>
 
@@ -122,10 +132,12 @@ function PeopleEdit() {
                             </label>
 
                             <input
+                                name="lastname"
                                 className="input input-bordered w-full max-w-xs"
                                 type="text"
-                                value={lastname}
-                                onChange={(e) => setLastname(e.target.value)}
+                                value={state.lastname}
+                                onChange={handleInputChange}
+                                required
                             />
                         </div>
 
@@ -138,10 +150,11 @@ function PeopleEdit() {
                             </label>
 
                             <input
+                                name="address"
                                 className="input input-bordered w-full max-w-xs"
                                 type="text"
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
+                                value={state.address}
+                                onChange={handleInputChange}
                             />
                         </div>
 
@@ -154,10 +167,11 @@ function PeopleEdit() {
                             </label>
 
                             <input
+                                name="city"
                                 className="input input-bordered w-full max-w-xs"
                                 type="text"
-                                value={city}
-                                onChange={(e) => setCity(e.target.value)}
+                                value={state.city}
+                                onChange={handleInputChange}
                             />
                         </div>
 
@@ -170,12 +184,11 @@ function PeopleEdit() {
                             </label>
 
                             <input
+                                name="country"
                                 className="input input-bordered w-full max-w-xs"
                                 type="text"
-                                value={country}
-                                onChange={(event) =>
-                                    setCountry(event.target.value)
-                                }
+                                value={state.country}
+                                onChange={handleInputChange}
                             />
                         </div>
 
@@ -201,57 +214,13 @@ function PeopleEdit() {
                 </div>
 
                 <div className="card-body">
-                    <div className="justify-between card-actions">
-                        <button
-                            className="btn people-margin-right"
-                            type="button"
-                            onClick={() => navigate('/people')}
-                        >
-                            <MdArrowBack size="1.5rem" className="mr-2" />{' '}
-                            CANCEL
-                        </button>
-
-                        <div>
-                            {id !== 'new' && (
-                                <div className="dropdown">
-                                    <label
-                                        tabIndex={0}
-                                        className="btn btn-secondary flex mr-7"
-                                    >
-                                        <MdDelete
-                                            size="1.5rem"
-                                            className="mr-2"
-                                        />{' '}
-                                        DELETE
-                                    </label>
-
-                                    <ul
-                                        tabIndex={0}
-                                        className="shadow menu dropdown-content bg-secondary rounded-md w-52"
-                                        style={{ position: 'fixed' }}
-                                    >
-                                        <li onClick={handleDelete}>
-                                            <a>
-                                                <RiCheckDoubleFill
-                                                    size="1.5rem"
-                                                    className="mr-2"
-                                                />
-                                                CONFIRM
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            )}
-
-                            <button className="btn btn-primary" type="submit">
-                                <MdCheck size="1.5rem" className="mr-2" /> SAVE
-                            </button>
-                        </div>
-                    </div>
+                    <CrudActions
+                        showDelete={id !== 'new'}
+                        onCancel={() => navigate('/people')}
+                        onDelete={handleDelete}
+                    />
                 </div>
             </div>
         </form>
     );
 }
-
-export default PeopleEdit;

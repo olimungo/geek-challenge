@@ -1,35 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
+import { Person, sortPeople } from 'models';
 import './list.css';
 
-type Person = {
-    id: string;
-    firstname: string;
-    lastname: string;
-    address: string;
-    city: string;
-    country: string;
-};
-
-function PeopleList() {
+export function PeopleList() {
     const navigate = useNavigate();
-    const [people, setPeople] = useState<any[]>([]);
+    const [people, setPeople] = useState<Person[]>([]);
 
     useEffect(() => {
         fetch(
             `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people`
         )
             .then((response) => response.json())
-            .then((people: Person[]) =>
-                setPeople(
-                    people.sort((a, b) =>
-                        a.firstname + a.lastname > b.firstname + b.lastname
-                            ? 1
-                            : -1
-                    )
-                )
-            );
+            .then((people: Person[]) => setPeople(people.sort(sortPeople)));
     }, []);
 
     const handleSelect = (id: string) => navigate(`/people/${id}`);
@@ -40,7 +24,7 @@ function PeopleList() {
                 {people.map((person) => {
                     return (
                         <li
-                            className="bg-slate-300 text-slate-700"
+                            className="bg-slate-600 text-slate-300 shadow-md"
                             key={person.id}
                             onClick={() => handleSelect(person.id)}
                         >
@@ -61,5 +45,3 @@ function PeopleList() {
         </div>
     );
 }
-
-export default PeopleList;

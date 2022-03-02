@@ -1,16 +1,19 @@
-import React from 'react';
 import './App.css';
-import PeopleList from './pages/people/list/list';
-import PeopleEdit from './pages/people/edit/edit';
-import { Route, Routes } from 'react-router-dom';
+import { About, Home, PeopleEdit, PeopleList } from 'pages';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 function App() {
+    const navigate = useNavigate();
+
     return (
         <div className="App">
             <div className="navbar bg-base-100 mb-10 shadow-xl rounded-box">
                 <div className="navbar-start">
                     <div className="dropdown">
-                        <label className="btn btn-ghost btn-circle">
+                        <label
+                            tabIndex={0}
+                            className="btn btn-ghost btn-circle flex mr-7"
+                        >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-5 w-5"
@@ -26,22 +29,39 @@ function App() {
                                 />
                             </svg>
                         </label>
+
                         <ul
                             tabIndex={0}
-                            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+                            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-300 rounded-box w-52"
                         >
                             <li>
-                                <a href="/">Homepage</a>
+                                <button
+                                    className="btn btn-ghost"
+                                    onClick={() => navigate('/home')}
+                                >
+                                    Homepage
+                                </button>
                             </li>
                             <li>
-                                <a href="/">Portfolio</a>
+                                <button
+                                    className="btn btn-ghost"
+                                    onClick={() => navigate('/people')}
+                                >
+                                    People
+                                </button>
                             </li>
                             <li>
-                                <a href="/">About</a>
+                                <button
+                                    className="btn btn-ghost"
+                                    onClick={() => navigate('/about')}
+                                >
+                                    About
+                                </button>
                             </li>
                         </ul>
                     </div>
                 </div>
+
                 <div className="navbar-center">
                     <label className="normal-case text-xl">geekChallenge</label>
                 </div>
@@ -87,7 +107,9 @@ function App() {
             <Routes>
                 <Route path="/people/:id" element={<PeopleEdit />} />
                 <Route path="/people" element={<PeopleList />} />
-                <Route path="/" element={<PeopleList />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/" element={<Home />} />
             </Routes>
         </div>
     );
