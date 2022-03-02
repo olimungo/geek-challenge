@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { MdArrowBack, MdCheck, MdDelete } from 'react-icons/md';
 import { RiCheckDoubleFill } from 'react-icons/ri';
 
@@ -14,49 +15,64 @@ export function CrudActions(props: Props) {
         onCancel = dummyCallback,
         onDelete = dummyCallback,
     } = props;
+    const [toConfirm, setToConfirm] = useState(false);
+    const [toConfirmTimer, setToConfirmTimer] = useState<NodeJS.Timeout>();
+
+    useEffect(() => {
+        return () => {
+            if (toConfirmTimer) {
+                clearTimeout(toConfirmTimer);
+            }
+        };
+    }, [toConfirmTimer]);
+
+    const handleConfirm = () => {
+        const timer = setTimeout(() => {
+            setToConfirm(false);
+        }, 2000);
+
+        setToConfirmTimer(timer);
+        setToConfirm(true);
+    };
 
     return (
         <div>
             <div className="justify-between card-actions">
                 <button
-                    className="btn people-margin-right"
+                    className="btn btn-sm sm:btn-md"
                     type="button"
                     onClick={onCancel}
                 >
-                    <MdArrowBack size="1.5rem" className="mr-2" /> CANCEL
+                    <MdArrowBack size="1.3rem" className="mr-2" /> CANCEL
                 </button>
 
-                <div>
-                    {showDelete && (
-                        <div className="dropdown">
-                            <label
-                                tabIndex={0}
-                                className="btn btn-secondary flex mr-7"
-                            >
-                                <MdDelete size="1.5rem" className="mr-2" />{' '}
-                                DELETE
-                            </label>
-
-                            <ul
-                                tabIndex={0}
-                                className="shadow menu dropdown-content bg-secondary rounded-md w-52"
-                                style={{ position: 'fixed' }}
-                            >
-                                <li onClick={onDelete}>
-                                    <div>
-                                        <RiCheckDoubleFill
-                                            size="1.5rem"
-                                            className="mr-2"
-                                        />
-                                        CONFIRM
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                <div className="flex items-center">
+                    {showDelete && !toConfirm && (
+                        <button
+                            type="button"
+                            className="btn btn-sm sm:btn-md btn-secondary flex items-center mr-5"
+                            onClick={handleConfirm}
+                        >
+                            <MdDelete size="1.3rem" className="mr-2" /> DELETE
+                        </button>
                     )}
 
-                    <button className="btn btn-primary" type="submit">
-                        <MdCheck size="1.5rem" className="mr-2" /> SAVE
+                    {toConfirm && (
+                        <button
+                            type="button"
+                            className="btn btn-sm sm:btn-md btn-secondary flex items-center mr-5"
+                            onClick={onDelete}
+                        >
+                            <RiCheckDoubleFill size="1.3rem" className="mr-2" />{' '}
+                            CONFIRM
+                        </button>
+                    )}
+
+                    <button
+                        className="btn btn-sm sm:btn-md btn-primary"
+                        type="submit"
+                    >
+                        <MdCheck size="1.3rem" className="mr-2" /> SAVE
                     </button>
                 </div>
             </div>

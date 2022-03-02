@@ -54,7 +54,9 @@ export function PeopleEdit() {
                 .then(async (response) => {
                     if (selectedFile) {
                         const data = new FormData();
+
                         data.append('avatar', selectedFile);
+
                         await fetch(`${backEnd}/people/${response.id}/avatar`, {
                             method: 'POST',
                             body: data,
@@ -90,7 +92,8 @@ export function PeopleEdit() {
     return (
         <form
             ref={form}
-            className="flex flex-col items-center"
+            id="form"
+            className="flex flex-col items-center pt-5 sm:pt-16"
             onSubmit={handleSubmit}
         >
             <div className="card w-11/12 sm:w-[37rem] bg-base-100 card-compact shadow-xl">
@@ -110,7 +113,8 @@ export function PeopleEdit() {
                                 className="w-[7rem] inline-block"
                                 htmlFor="firstname"
                             >
-                                First name <span>*</span>
+                                First name{' '}
+                                <span className="text-red-300">*</span>
                             </label>
 
                             <input
@@ -128,7 +132,8 @@ export function PeopleEdit() {
                                 className="w-[7rem] inline-block"
                                 htmlFor="lastname"
                             >
-                                Last name
+                                Last name{' '}
+                                <span className="text-red-300">*</span>
                             </label>
 
                             <input

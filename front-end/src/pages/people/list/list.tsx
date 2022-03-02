@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import { Person, sortPeople } from 'models';
-import './list.css';
+import { CardPerson } from 'components';
 
 export function PeopleList() {
     const navigate = useNavigate();
@@ -19,28 +19,23 @@ export function PeopleList() {
     const handleSelect = (id: string) => navigate(`/people/${id}`);
 
     return (
-        <div className="people-list">
-            <ul>
+        <div className="flex flex-col items-center">
+            <ul className="w-11/12 sm:w-[37rem]">
                 {people.map((person) => {
                     return (
-                        <li
-                            className="bg-slate-600 text-slate-300 shadow-md"
-                            key={person.id}
-                            onClick={() => handleSelect(person.id)}
-                        >
-                            {person.firstname} {person.lastname}
+                        <li key={person.id}>
+                            <CardPerson data={person} onSelect={handleSelect} />
                         </li>
                     );
                 })}
             </ul>
 
             <button
-                type="button"
-                className="btn btn-primary mt-10 text-xl"
+                className="btn btn-md btn-primary mt-10 sm:btn-lg fixed bottom-10 right-10"
                 onClick={() => handleSelect('new')}
             >
-                <MdOutlineAddCircleOutline size="1.5rem" className="mr-2" /> ADD
-                NEW
+                <MdOutlineAddCircleOutline size="1.5rem" className="mr-2" />
+                ADD NEW
             </button>
         </div>
     );

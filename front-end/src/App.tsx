@@ -6,8 +6,8 @@ function App() {
     const navigate = useNavigate();
 
     return (
-        <div className="App">
-            <div className="navbar bg-base-100 mb-10 shadow-xl rounded-box">
+        <div className="mt-[5rem]">
+            <div className="navbar bg-base-100 shadow-xl rounded-box fixed top-0">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label
@@ -104,13 +104,15 @@ function App() {
                 </div>
             </div>
 
-            <Routes>
-                <Route path="/people/:id" element={<PeopleEdit />} />
-                <Route path="/people" element={<PeopleList />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/" element={<Home />} />
-            </Routes>
+            <div className="h-100">
+                <Routes>
+                    <Route path="/people/:id" element={<PeopleEdit />} />
+                    <Route path="/people" element={<PeopleList />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/" element={<Home />} />
+                </Routes>
+            </div>
         </div>
     );
 }
