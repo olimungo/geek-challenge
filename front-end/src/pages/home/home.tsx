@@ -1,23 +1,34 @@
+import { useTranslation } from 'react-i18next';
+
 export function Home() {
+    const { t } = useTranslation();
+
     return (
-        <div className="m-5">
-            <div className="hero bg-base-200">
-                <div className="text-center hero-content">
+        <>
+            <div
+                className="hero h-[50rem]"
+                style={{
+                    backgroundImage: 'url("homelander.jpeg")',
+                }}
+            >
+                <div className="hero-overlay bg-opacity-60"></div>
+
+                <div className="hero-content text-center text-neutral-content absolute top-60 left-60">
                     <div className="max-w-md">
-                        <h1 className="text-5xl font-bold">
-                            To infinity and beyond...
+                        <h1 className="mb-5 text-5xl font-bold">
+                            {t('homepage.hero')}
                         </h1>
-                        <p className="py-6">
-                            Sel the problem you solve, not the product.
-                            <br />
-                            If it fails, call it version 1 and start again.
-                            <br />
-                            Build. Fail. Build. Fail. Build. Fail.
+                        <p className="mb-5">
+                            Provident cupiditate voluptatem et in. Quaerat
+                            fugiat ut assumenda excepturi exercitationem quasi.
+                            In deleniti eaque aut repudiandae et a id nisi.
                         </p>
-                        <button className="btn btn-primary">Get Started</button>
+                        <button className="btn btn-primary">
+                            {t('homepage.get-started')}
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

@@ -1,0 +1,35 @@
+{
+    "header": {
+        "title": "concoursDeTarés",
+        "homepage": "Page d'accueil",
+        "people": "Personnes",
+        "about": "A propos de nous"
+    },
+    "homepage": {
+        "hero": "Qui est le héro ?",
+        "get-started": "Démarrez"
+    },
+    "about": {
+        "us": "A propos de nous"
+    },
+    "people": {
+        "list": {
+            "title": "Personnes",
+            "add-new": "Ajouter"
+        },
+        "edit": {
+            "firstname": "Prénom",
+            "lastname": "Nom",
+            "address": "Adresse",
+            "city": "Ville",
+            "country": "Pays",
+            "upload": "Télécharger votre avatar"
+        }
+    },
+    "crud-actions": {
+        "cancel": "Annuler",
+        "delete": "Supprimer",
+        "confirm": "Confirmer",
+        "save": "Sauver"
+    }
+}
