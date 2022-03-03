@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { MdUpload } from 'react-icons/md';
 import { Person } from 'models';
 import { CrudActions } from 'components';
+import { useTranslation } from 'react-i18next';
 
 type State = {
     firstname: string;
@@ -21,6 +22,7 @@ const defaultState: State = {
 };
 
 export function PeopleEdit() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     const [state, setState] = useState<State>(defaultState);
@@ -113,7 +115,7 @@ export function PeopleEdit() {
                                 className="w-[7rem] inline-block"
                                 htmlFor="firstname"
                             >
-                                First name{' '}
+                                {t('people.edit.firstname') + ' '}
                                 <span className="text-red-300">*</span>
                             </label>
 
@@ -132,7 +134,7 @@ export function PeopleEdit() {
                                 className="w-[7rem] inline-block"
                                 htmlFor="lastname"
                             >
-                                Last name{' '}
+                                {t('people.edit.lastname') + ' '}
                                 <span className="text-red-300">*</span>
                             </label>
 
@@ -151,7 +153,7 @@ export function PeopleEdit() {
                                 className="w-[7rem] inline-block"
                                 htmlFor="address"
                             >
-                                Address
+                                {t('people.edit.address')}
                             </label>
 
                             <input
@@ -168,7 +170,7 @@ export function PeopleEdit() {
                                 className="w-[7rem] inline-block"
                                 htmlFor="city"
                             >
-                                City
+                                {t('people.edit.city')}
                             </label>
 
                             <input
@@ -185,7 +187,7 @@ export function PeopleEdit() {
                                 className="w-[7rem] inline-block"
                                 htmlFor="country"
                             >
-                                Country
+                                {t('people.edit.country')}
                             </label>
 
                             <input
@@ -211,7 +213,8 @@ export function PeopleEdit() {
                                             handleUpload(event.target.files)
                                         }
                                     />
-                                    <MdUpload className="mr-2" /> UPLOAD AVATAR
+                                    <MdUpload className="mr-2" />{' '}
+                                    {t('people.edit.upload')}
                                 </label>
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { MdArrowBack, MdCheck, MdDelete } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 import { RiCheckDoubleFill } from 'react-icons/ri';
+import { MdArrowBack, MdCheck, MdDelete } from 'react-icons/md';
 
 type Props = {
     showDelete?: boolean;
@@ -10,6 +11,7 @@ type Props = {
 
 export function CrudActions(props: Props) {
     const dummyCallback = () => true;
+    const { t } = useTranslation();
     const {
         showDelete = true,
         onCancel = dummyCallback,
@@ -43,7 +45,8 @@ export function CrudActions(props: Props) {
                     type="button"
                     onClick={onCancel}
                 >
-                    <MdArrowBack size="1.3rem" className="mr-2" /> CANCEL
+                    <MdArrowBack size="1.3rem" className="mr-2" />{' '}
+                    {t('crud-actions.cancel')}
                 </button>
 
                 <div className="flex items-center">
@@ -53,7 +56,8 @@ export function CrudActions(props: Props) {
                             className="btn btn-sm sm:btn-md btn-secondary flex items-center mr-5"
                             onClick={handleConfirm}
                         >
-                            <MdDelete size="1.3rem" className="mr-2" /> DELETE
+                            <MdDelete size="1.3rem" className="mr-2" />{' '}
+                            {t('crud-actions.delete')}
                         </button>
                     )}
 
@@ -64,7 +68,7 @@ export function CrudActions(props: Props) {
                             onClick={onDelete}
                         >
                             <RiCheckDoubleFill size="1.3rem" className="mr-2" />{' '}
-                            CONFIRM
+                            {t('crud-actions.confirm')}
                         </button>
                     )}
 
@@ -72,7 +76,8 @@ export function CrudActions(props: Props) {
                         className="btn btn-sm sm:btn-md btn-primary"
                         type="submit"
                     >
-                        <MdCheck size="1.3rem" className="mr-2" /> SAVE
+                        <MdCheck size="1.3rem" className="mr-2" />{' '}
+                        {t('crud-actions.save')}
                     </button>
                 </div>
             </div>

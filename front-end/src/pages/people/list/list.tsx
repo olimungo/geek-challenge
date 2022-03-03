@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import { Person, sortPeople } from 'models';
 import { CardPerson } from 'components';
 
 export function PeopleList() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [people, setPeople] = useState<Person[]>([]);
 
@@ -20,6 +22,10 @@ export function PeopleList() {
 
     return (
         <div className="flex flex-col items-center">
+            <h1 className="text-3xl sm:text-5xl p-1 sm:p-4">
+                {t('people.list.title')}
+            </h1>
+
             <ul className="w-11/12 sm:w-[37rem]">
                 {people.map((person) => {
                     return (
@@ -35,7 +41,7 @@ export function PeopleList() {
                 onClick={() => handleSelect('new')}
             >
                 <MdOutlineAddCircleOutline size="1.5rem" className="mr-2" />
-                ADD NEW
+                {t('people.list.add-new')}
             </button>
         </div>
     );
