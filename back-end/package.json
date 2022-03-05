@@ -9,8 +9,10 @@
     "scripts": {
         "start": "nodemon scripts/server.ts",
         "start-prod": "nodemon scripts/server.js",
+        "just-build": "tsc --build",
         "build": "tsc --build; docker build -t olimungo/geek-back-end .",
-        "build-rpi": "tsc --build; docker buildx build --platform linux/arm/v7 -t olimungo/geek-back-end:$npm_package_config_rpi_version --push ."
+        "build-rpi": "tsc --build; docker buildx build --platform linux/arm/v7 -t olimungo/geek-back-end:$npm_package_config_rpi_version --push .",
+        "create-person": "ts-node scripts/mock-data/create-person.ts"
     },
     "keywords": [],
     "author": "",
@@ -27,6 +29,7 @@
         "uuid": "^8.3.2"
     },
     "devDependencies": {
+        "@faker-js/faker": "^6.0.0-alpha.7",
         "@types/body-parser": "^1.19.2",
         "@types/cors": "^2.8.12",
         "@types/express": "^4.17.13",

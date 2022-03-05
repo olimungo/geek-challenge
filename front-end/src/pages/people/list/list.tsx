@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import { Person, sortPeople } from 'models';
-import { CardPerson } from 'components';
+import { CardPerson, SearchBar } from 'components';
 
 export function PeopleList() {
     const { t } = useTranslation();
@@ -20,13 +20,23 @@ export function PeopleList() {
 
     const handleSelect = (id: string) => navigate(`/people/${id}`);
 
-    return (
-        <div className="flex flex-col items-center">
-            <h1 className="text-3xl sm:text-5xl p-1 sm:p-4">
-                {t('people.list.title')}
-            </h1>
+    const handleSearch = (pattern: string) => {
+        fetch(
+            `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people/search/${pattern}`
+        )
+            .then((response) => response.json())
+            .then((people) => setPeople(people));
+    };
 
-            <ul className="w-11/12 sm:w-[37rem]">
+    return (
+        <div className="flex flex-col items-center pt">
+            {/* <h1 className="text-3xl sm:text-5xl p-1 sm:p-4">
+                {t('people.list.title')}
+            </h1> */}
+
+            <SearchBar onSearch={handleSearch} />
+
+            <ul className="w-11/12 sm:w-[37rem] mt-10">
                 {people.map((person) => {
                     return (
                         <li key={person.id}>

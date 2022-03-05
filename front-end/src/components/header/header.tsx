@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdMenu } from 'react-icons/md';
+import { ImLab } from 'react-icons/im';
 import { LanguageSelector } from 'components';
 
 type Props = {};
@@ -41,13 +42,16 @@ export function Header(props: Props) {
                         </li>
                     </ul>
                 </div>
+
+                <div className="flex items-center">
+                    <ImLab size="1.3rem" className="mr-3" />
+                    <label className="normal-case text-2xl">
+                        {t('header.title')}
+                    </label>
+                </div>
             </div>
 
-            <div className="navbar-center">
-                <label className="normal-case text-xl">
-                    {t('header.title')}
-                </label>
-            </div>
+            <div className="navbar-center"></div>
 
             <div className="navbar-end">
                 <LanguageSelector />

@@ -4,6 +4,8 @@
         "rootDir": "scripts",
         "outDir": "build",
         "target": "es6",
-        "module": "commonjs"
-    }
+        "module": "commonjs",
+        "baseUrl": "./scripts"
+    },
+    "exclude": ["scripts/mock-data/**/*"]
 }

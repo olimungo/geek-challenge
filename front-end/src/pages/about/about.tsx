@@ -18,7 +18,22 @@ export function About() {
                     <code>Done!</code>
                 </pre>
                 <pre data-prefix="$">
-                    <code>ping elvis</code>
+                    <code>ping elvis -c 1</code>
+                </pre>
+                <pre data-prefix=">" className="text-warning">
+                    <code>PING elvis (666.666.0.1): 56 data bytes</code>
+                </pre>
+                <pre data-prefix=">" className="text-success">
+                    <code>
+                        64 bytes from 666.666.0.1: icmp_seq=0 ttl=64 time=8.261
+                        ms
+                    </code>
+                </pre>
+                <pre data-prefix=">" className="text-success">
+                    <code>
+                        round-trip min/avg/max/stddev = 8.261/8.331/8.400/0.069
+                        ms
+                    </code>
                 </pre>
                 <pre data-prefix=">" className="text-success">
                     <code>elvis is alive!</code>
