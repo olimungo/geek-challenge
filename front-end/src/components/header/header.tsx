@@ -10,7 +10,7 @@ export function Header(props: Props) {
     const navigate = useNavigate();
 
     return (
-        <div className="navbar bg-base-100 shadow-xl rounded-box fixed top-0">
+        <div className="navbar bg-base-100 shadow-xl rounded-box fixed top-0 z-50">
             <div className="navbar-start">
                 <div className="dropdown dropdown-hover">
                     <label
