@@ -6,6 +6,7 @@
 */.pnp.js
 */*.aof
 */*.rdb
+**/avatars
 
 # testing
 */coverage
