@@ -2,7 +2,8 @@ import { writeFile, existsSync, mkdirSync } from 'fs';
 import * as path from 'path';
 import redisClient from '../../redisClient';
 
-const AVATARS_FOLDER = path.join(__dirname, '../../../avatars');
+// Save avatars in the folders where the base script was launched
+const AVATARS_FOLDER = path.join(process.cwd(), 'avatars');
 const ASSETS_FOLDER = path.join(__dirname, '../../assets');
 
 // Check if the folder for saving the avatars images exist, if not create it

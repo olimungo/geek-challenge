@@ -2,7 +2,6 @@ import * as cors from 'cors';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as fileUpload from 'express-fileupload';
-import { networkInterfaces } from 'os';
 import { defineRoutes as definePersonRoutes } from './controllers';
 
 const app = express();
@@ -16,21 +15,9 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
     app.use(bodyParser.raw());
     app.use(fileUpload());
 
-    // Get the IP address of the host
-    const ifaces = networkInterfaces();
-    let ipAddress = '';
-
-    for (var dev in ifaces) {
-        ifaces[dev].filter((details) =>
-            details.family === 'IPv4' && details.internal === false
-                ? (ipAddress = details.address)
-                : undefined
-        );
-    }
-
     definePersonRoutes(app);
 
     app.listen(PORT, () => {
-        console.log(`> Server is running at https://${ipAddress}:${PORT}`);
+        console.log(`> Server is running at http://localhost:${PORT}`);
     });
 })();
