@@ -224,7 +224,7 @@ export function PeopleEdit() {
                 <div className="card-body">
                     <CrudActions
                         showDelete={id !== 'new'}
-                        onCancel={() => navigate('/people')}
+                        onCancel={() => navigate(-1)}
                         onDelete={handleDelete}
                     />
                 </div>

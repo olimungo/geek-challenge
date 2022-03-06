@@ -1,44 +1,18 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
-import { Person, sortPeople } from 'models';
+import { Person } from 'models';
 import { CardPerson, SearchBar } from 'components';
 
-export function PeopleList() {
+type Props = { people: Person[]; onSearch?: (pattern: string) => void };
+
+export function PeopleList(props: Props) {
+    const dummyCallback = () => true;
+    const { people, onSearch = dummyCallback } = props;
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const [people, setPeople] = useState<Person[]>([]);
-
-    const getPeople = () => {
-        fetch(
-            `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people`
-        )
-            .then((response) => response.json())
-            .then((people: Person[]) => setPeople(people.sort(sortPeople)));
-    };
-
-    useEffect(() => {
-        getPeople();
-    }, []);
 
     const handleSelect = (id: string) => navigate(`/people/${id}`);
-
-    const handleSearch = (pattern: string) => {
-        if (pattern) {
-            fetch(
-                `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people/search/${pattern}`
-            )
-                .then((response) => response.json())
-                .then((response) => {
-                    console.log(response);
-                    return response;
-                })
-                .then((people) => setPeople(people));
-        } else {
-            getPeople();
-        }
-    };
 
     return (
         <div className="flex flex-col items-center pt">
@@ -46,7 +20,7 @@ export function PeopleList() {
                 {t('people.list.title')}
             </h1> */}
 
-            <SearchBar onSearch={handleSearch} />
+            <SearchBar onSearch={onSearch} />
 
             <ul className="w-11/12 sm:w-[37rem] mt-10">
                 {people.map((person) => {
