@@ -19,7 +19,7 @@ export function SearchBar(props: Props) {
     } = props;
     const { t } = useTranslation();
     const [size, setSize] = useState(checkSize());
-    const [showReset, setShowReset] = useState(false);
+    const [showReset, setShowReset] = useState(pattern !== '' ? true : false);
 
     function checkSize() {
         if (window.innerWidth < 640) {
