@@ -31,5 +31,8 @@
         "delete": "Delete",
         "confirm": "Confirm",
         "save": "Save"
+    },
+    "search-bar": {
+        "placeholder": "Enter the text to search"
     }
 }

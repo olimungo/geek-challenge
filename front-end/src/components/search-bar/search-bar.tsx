@@ -1,19 +1,31 @@
-import { FormEvent, useEffect, useState } from 'react';
-import { MdSearch } from 'react-icons/md';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { MdSearch, MdClose } from 'react-icons/md';
 
-type Props = { onSearch: (pattern: string) => void };
+type Props = {
+    pattern: string;
+    onChange: (pattern: string) => void;
+    onSearch: (pattern: string) => void;
+    onReset: () => void;
+};
 
 export function SearchBar(props: Props) {
     const dummyCallback = () => true;
-    const { onSearch = dummyCallback } = props;
-    const [pattern, setPattern] = useState('');
+    const {
+        pattern,
+        onChange = dummyCallback,
+        onSearch = dummyCallback,
+        onReset = dummyCallback,
+    } = props;
+    const { t } = useTranslation();
     const [size, setSize] = useState(checkSize());
+    const [showReset, setShowReset] = useState(false);
 
     function checkSize() {
         if (window.innerWidth < 640) {
             return '1.3rem';
         } else {
-            return '2.3rem';
+            return '1.9rem';
         }
     }
 
@@ -34,20 +46,36 @@ export function SearchBar(props: Props) {
         onSearch(pattern);
     };
 
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setShowReset(event.target.value !== '');
+        onChange(event.target.value);
+    };
+
     return (
         <form onSubmit={handleSearch} className="fixed">
             <div className="p-[.2rem] sm:p-1 bg-slate-400 rounded-xl">
                 <MdSearch
                     size={size}
-                    className="absolute top-2 left-2 sm:top-2.5 sm:left-2.5 text-slate-400 search-bar-size"
+                    className="absolute top-2.5 left-2 sm:top-3.5 sm:left-3.5 text-slate-400 search-bar-size"
                 />
+
                 <input
                     type="text"
-                    placeholder="Type here"
-                    className="input input-sm sm:input w-60 sm:w-96 pl-8 sm:pl-14"
+                    placeholder={t('search-bar.placeholder')}
+                    className="input input-sm sm:input w-72 sm:w-96 px-8 sm:px-14 sm:text-xl"
                     value={pattern}
-                    onChange={(event) => setPattern(event.target.value)}
-                ></input>
+                    onChange={handleChange}
+                />
+
+                {showReset && (
+                    <button
+                        type="button"
+                        className="btn btn-ghost btn-circle btn-xs sm:btn-sm absolute top-2 right-2 sm:top-3"
+                        onClick={onReset}
+                    >
+                        <MdClose size={size} className=" text-slate-400" />
+                    </button>
+                )}
             </div>
         </form>
     );

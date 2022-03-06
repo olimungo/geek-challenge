@@ -2,13 +2,15 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import { Person } from 'models';
-import { CardPerson, SearchBar } from 'components';
+import { CardPerson } from 'components';
 
-type Props = { people: Person[]; onSearch?: (pattern: string) => void };
+type Props = {
+    people: Person[];
+    searchBar: JSX.Element;
+};
 
 export function PeopleList(props: Props) {
-    const dummyCallback = () => true;
-    const { people, onSearch = dummyCallback } = props;
+    const { people, searchBar } = props;
     const { t } = useTranslation();
     const navigate = useNavigate();
 
@@ -20,7 +22,7 @@ export function PeopleList(props: Props) {
                 {t('people.list.title')}
             </h1> */}
 
-            <SearchBar onSearch={onSearch} />
+            {searchBar}
 
             <ul className="w-11/12 sm:w-[37rem] mt-10">
                 {people.map((person) => {

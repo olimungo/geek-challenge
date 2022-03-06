@@ -1,12 +1,13 @@
 import './App.css';
 import { About, Home, PeopleEdit, PeopleList } from 'pages';
 import { Route, Routes } from 'react-router-dom';
-import { Header } from 'components';
+import { Header, SearchBar } from 'components';
 import { Suspense, useEffect, useState } from 'react';
 import { Person, sortPeople } from 'models';
 
 function App() {
     const [people, setPeople] = useState<Person[]>([]);
+    const [pattern, setPattern] = useState('');
 
     const getPeople = () => {
         fetch(
@@ -20,7 +21,14 @@ function App() {
         getPeople();
     }, []);
 
-    const handleSearch = (pattern: string) => {
+    useEffect(() => {
+        // Return to the top of he window when the list of people changes
+        window.scrollTo({ top: 0 });
+    }, [people]);
+
+    const handlePatternSearch = (pattern: string) => {
+        setPattern(pattern);
+
         if (pattern) {
             fetch(
                 `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people/search/${pattern}`
@@ -30,6 +38,10 @@ function App() {
         } else {
             getPeople();
         }
+    };
+
+    const handlePatternChange = (pattern: string) => {
+        setPattern(pattern);
     };
 
     return (
@@ -45,7 +57,16 @@ function App() {
                             element={
                                 <PeopleList
                                     people={people}
-                                    onSearch={handleSearch}
+                                    searchBar={
+                                        <SearchBar
+                                            pattern={pattern}
+                                            onChange={handlePatternChange}
+                                            onSearch={handlePatternSearch}
+                                            onReset={() =>
+                                                handlePatternSearch('')
+                                            }
+                                        />
+                                    }
                                 />
                             }
                         />
