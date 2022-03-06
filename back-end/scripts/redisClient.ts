@@ -3,18 +3,39 @@ type RedisClientType = ReturnType<typeof createClient>;
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
 
-console.log(`> Connecting to ${REDIS_URL}`);
+const RedisSingleton = (function () {
+    let instance;
 
-const redisClient: RedisClientType = createClient({ url: REDIS_URL });
+    async function createInstance() {
+        console.log(`> Connecting to ${REDIS_URL}`);
 
-redisClient.on('error', (error) => {
-    if (error.code === 'ECONNREFUSED' || error.code === 'ENOTFOUND') {
-        console.log('> Redis container not yet available...');
+        const redisClient: RedisClientType = createClient({ url: REDIS_URL });
+
+        redisClient.on('error', (error) => {
+            if (error.code === 'ECONNREFUSED' || error.code === 'ENOTFOUND') {
+                console.log('> Redis container not yet available...');
+            }
+        });
+
+        redisClient.on('connect', () => console.log(`> Connected to Redis`));
+
+        await redisClient.connect();
+
+        return redisClient;
     }
-});
 
-redisClient.on('connect', () => console.log(`> Connected to Redis`));
+    return {
+        getInstance: function () {
+            if (!instance) {
+                instance = createInstance();
+            }
+            return instance;
+        },
+    };
+})();
 
-redisClient.connect();
+const redisClient = () => {
+    return RedisSingleton.getInstance();
+};
 
 export default redisClient;

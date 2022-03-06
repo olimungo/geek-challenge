@@ -10,22 +10,34 @@ export function PeopleList() {
     const navigate = useNavigate();
     const [people, setPeople] = useState<Person[]>([]);
 
-    useEffect(() => {
+    const getPeople = () => {
         fetch(
             `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people`
         )
             .then((response) => response.json())
             .then((people: Person[]) => setPeople(people.sort(sortPeople)));
+    };
+
+    useEffect(() => {
+        getPeople();
     }, []);
 
     const handleSelect = (id: string) => navigate(`/people/${id}`);
 
     const handleSearch = (pattern: string) => {
-        fetch(
-            `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people/search/${pattern}`
-        )
-            .then((response) => response.json())
-            .then((people) => setPeople(people));
+        if (pattern) {
+            fetch(
+                `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people/search/${pattern}`
+            )
+                .then((response) => response.json())
+                .then((response) => {
+                    console.log(response);
+                    return response;
+                })
+                .then((people) => setPeople(people));
+        } else {
+            getPeople();
+        }
     };
 
     return (

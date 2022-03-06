@@ -1,44 +1,67 @@
-import { createClient } from 'redis';
-type RedisClientType = ReturnType<typeof createClient>;
+import { writeFile, existsSync, mkdirSync } from 'fs';
+import * as path from 'path';
+import redisClient from '../../redisClient';
 
-export async function getPerson(redis: RedisClientType, id: string) {
+const AVATARS_FOLDER = path.join(__dirname, '../../../avatars');
+const ASSETS_FOLDER = path.join(__dirname, '../../assets');
+
+// Check if the folder for saving the avatars images exist, if not create it
+if (!existsSync(AVATARS_FOLDER)) {
+    mkdirSync(AVATARS_FOLDER);
+}
+
+export async function getPerson(id: string) {
+    const redis = await redisClient();
     const person = await redis.hGetAll(`person:${id}`);
     person.id = id;
 
     return person;
 }
 
-export function setPerson(redis: RedisClientType, id: string, person: any) {
-    const personId = `person:${id}`;
+export async function getPeople() {
+    const redis = await redisClient();
+    const ids = await redis.keys('person:*');
+    const people = [];
 
-    redis.hSet(personId, 'firstname', person.firstname);
-    redis.hSet(personId, 'lastname', person.lastname);
-    redis.hSet(personId, 'address', person.address);
-    redis.hSet(personId, 'city', person.city);
-    redis.hSet(personId, 'country', person.country);
+    await Promise.all(
+        ids.map(async (id: string) => {
+            people.push(await getPerson(id.split(':')[1]));
+        })
+    );
 
-    updateIndex(redis, 'person:firstname', id, person.firstname);
-    updateIndex(redis, 'person:lastname', id, person.lastname);
-    updateIndex(redis, 'person:address', id, person.address);
-    updateIndex(redis, 'person:city', id, person.city);
-    updateIndex(redis, 'person:country', id, person.country);
+    return people;
 }
 
-export async function deletePerson(redisClient: RedisClientType, id: string) {
+export async function setPerson(id: string, person: any) {
+    const redis = await redisClient();
+    const personId = `person:${id}`;
+
+    await redis.hSet(personId, 'firstname', person.firstname);
+    await redis.hSet(personId, 'lastname', person.lastname);
+    await redis.hSet(personId, 'address', person.address);
+    await redis.hSet(personId, 'city', person.city);
+    await redis.hSet(personId, 'country', person.country);
+
+    await updateIndex('person:firstname', id, person.firstname);
+    await updateIndex('person:lastname', id, person.lastname);
+    await updateIndex('person:address', id, person.address);
+    await updateIndex('person:city', id, person.city);
+    await updateIndex('person:country', id, person.country);
+}
+
+export async function deletePerson(id: string) {
+    const redis = await redisClient();
     const dbId = `person:${id}`;
 
-    await redisClient.del(dbId);
-    await deleteValueInPersonIndices(redisClient, id);
+    await redis.del(dbId);
+    await deleteValueInPersonIndices(id);
 
     return `{"id": "${id}"}`;
 }
 
-export async function deleteValueInIndex(
-    redis: RedisClientType,
-    index: string,
-    id: string
-) {
-    const scan = await redis.zScan(index, 0, { MATCH: `*${id}*` });
+export async function deleteValueInIndex(index: string, id: string) {
+    const redis = await redisClient();
+    const scan = await redis.zScan(index, 0, { MATCH: `*${id}*`, COUNT: 1000 });
 
     await Promise.all(
         scan.members.map(async (member) => {
@@ -47,29 +70,55 @@ export async function deleteValueInIndex(
     );
 }
 
-export async function updateIndex(
-    redis: RedisClientType,
-    key: string,
-    id: string,
-    value: string
-) {
+export async function updateIndex(key: string, id: string, value: string) {
+    const redis = await redisClient();
     const index = `index:${key}`;
 
-    await deleteValueInIndex(redis, index, id);
+    await deleteValueInIndex(index, id);
 
     await redis.zAdd(index, {
         score: 0,
-        value: `${value}:${id}`,
+        value: `${value.toLowerCase()}:${id}`,
     });
 }
 
-export async function deleteValueInPersonIndices(
-    redis: RedisClientType,
-    id: string
-) {
-    await deleteValueInIndex(redis, `index:person:firstname`, id);
-    await deleteValueInIndex(redis, `index:person:lastname`, id);
-    await deleteValueInIndex(redis, `index:person:address`, id);
-    await deleteValueInIndex(redis, `index:person:city`, id);
-    await deleteValueInIndex(redis, `index:person:country`, id);
+export async function deleteValueInPersonIndices(id: string) {
+    await deleteValueInIndex(`index:person:firstname`, id);
+    await deleteValueInIndex(`index:person:lastname`, id);
+    await deleteValueInIndex(`index:person:address`, id);
+    await deleteValueInIndex(`index:person:city`, id);
+    await deleteValueInIndex(`index:person:country`, id);
+}
+
+export async function getIdsFromPattern(index: string, pattern: string) {
+    const redis = await redisClient();
+    const result = await redis.zScan(index, 0, {
+        MATCH: `*${pattern}*`,
+        COUNT: 1000,
+    });
+
+    return result.members.map((hit) => {
+        const split = hit.value.split(':');
+        return split[split.length - 1];
+    });
+}
+
+export function saveAvatar(id: string, data: any, name: any) {
+    writeFile(`${AVATARS_FOLDER}/${id}`, data, (err) => {
+        if (err) {
+            console.log(
+                `File ${name} could not be saved to the file system: ${err}`
+            );
+        } else {
+            console.log(`File ${name} saved to the file system`);
+        }
+    });
+}
+
+export function getAvatar(response, id: string) {
+    if (existsSync(`${AVATARS_FOLDER}/${id}`)) {
+        response.sendFile(`${id}`, { root: AVATARS_FOLDER });
+    } else {
+        response.sendFile('no-avatar.png', { root: ASSETS_FOLDER });
+    }
 }
