@@ -2,24 +2,29 @@ import './App.css';
 import { About, Home, PeopleEdit, PeopleList } from 'pages';
 import { Route, Routes } from 'react-router-dom';
 import { Header, SearchBar } from 'components';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { Person, sortPeople } from 'models';
+// import { useStore } from 'hooks';
+
+const DEFAULT_LIST_LIMIT = 100;
 
 function App() {
     const [people, setPeople] = useState<Person[]>([]);
     const [pattern, setPattern] = useState('');
+    const [limit, setLimit] = useState(DEFAULT_LIST_LIMIT);
+    // const store = useStore();
 
-    const getPeople = () => {
+    const getPeople = useCallback(() => {
         fetch(
-            `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people`
+            `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people?limit=${limit}`
         )
             .then((response) => response.json())
             .then((people: Person[]) => setPeople(people.sort(sortPeople)));
-    };
+    }, [limit]);
 
     useEffect(() => {
         getPeople();
-    }, []);
+    }, [getPeople]);
 
     useEffect(() => {
         // Return to the top of he window when the list of people changes
@@ -34,7 +39,7 @@ function App() {
                 `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people/search/${pattern}`
             )
                 .then((response) => response.json())
-                .then((people) => setPeople(people));
+                .then((people) => setPeople(people.sort(sortPeople)));
         } else {
             getPeople();
         }
@@ -60,10 +65,14 @@ function App() {
                                     searchBar={
                                         <SearchBar
                                             pattern={pattern}
+                                            limit={limit}
                                             onChange={handlePatternChange}
                                             onSearch={handlePatternSearch}
                                             onReset={() =>
                                                 handlePatternSearch('')
+                                            }
+                                            onChangeLimit={(limit) =>
+                                                setLimit(limit)
                                             }
                                         />
                                     }

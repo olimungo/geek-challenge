@@ -4,6 +4,7 @@ import { MdUpload } from 'react-icons/md';
 import { Person } from 'models';
 import { CrudActions } from 'components';
 import { useTranslation } from 'react-i18next';
+import { useStore } from 'hooks';
 
 type State = {
     firstname: string;
@@ -27,8 +28,14 @@ export function PeopleEdit() {
     const { id } = useParams<{ id: string }>();
     const [state, setState] = useState<State>(defaultState);
     const [selectedFile, setSelectedFile] = useState<File>();
+    const store = useStore();
+
     const backEnd = `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}`;
     const form = useRef<HTMLFormElement>(null);
+
+    useEffect(() => {
+        store.appTitle = t('people.edit.title');
+    }, [store, t]);
 
     useEffect(() => {
         if (id !== 'new') {

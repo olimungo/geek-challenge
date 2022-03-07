@@ -19,14 +19,16 @@ export async function getPerson(id: string) {
     return person;
 }
 
-export async function getPeople() {
+export async function getPeople(limit: string) {
     const redis = await redisClient();
-    const ids = await redis.keys('person:*');
+    const ids = await redis.zRange('index:person:firstname', 0, limit);
     const people = [];
 
     await Promise.all(
         ids.map(async (id: string) => {
-            people.push(await getPerson(id.split(':')[1]));
+            const splitId = id.split(':');
+
+            people.push(await getPerson(splitId[splitId.length - 1]));
         })
     );
 
@@ -95,6 +97,8 @@ export async function getIdsFromPattern(index: string, pattern: string) {
     const redis = await redisClient();
     const result = await redis.zScan(index, 0, {
         MATCH: `*${pattern}*`,
+        // Redis might not send back a result when there are too few items in the set,
+        // so kind of forcing it by specifying a large count.
         COUNT: 1000,
     });
 

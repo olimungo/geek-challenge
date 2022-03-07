@@ -4,7 +4,7 @@ import { setPerson } from '../services';
 const fs = require('fs');
 const client = require('https');
 
-const TO_BE_CREATED_COUNT = 50;
+const TO_BE_CREATED_COUNT = 1000;
 
 async function downloadImage(url, filepath) {
     return new Promise((resolve, reject) => {
@@ -40,9 +40,9 @@ async function downloadImage(url, filepath) {
             country: faker.address.country(),
         });
 
-        await downloadImage(faker.image.avatar(), `./avatars/${id}`)
-            .then(console.log)
-            .catch(console.error);
+        // await downloadImage(faker.image.avatar(), `./avatars/${id}`)
+        //     .then(console.log)
+        //     .catch(console.error);
     }
 
     process.exit();

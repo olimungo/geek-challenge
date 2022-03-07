@@ -4,18 +4,22 @@ import { MdSearch, MdClose } from 'react-icons/md';
 
 type Props = {
     pattern: string;
+    limit: number;
     onChange: (pattern: string) => void;
     onSearch: (pattern: string) => void;
     onReset: () => void;
+    onChangeLimit: (limit: number) => void;
 };
 
 export function SearchBar(props: Props) {
     const dummyCallback = () => true;
     const {
         pattern,
+        limit,
         onChange = dummyCallback,
         onSearch = dummyCallback,
         onReset = dummyCallback,
+        onChangeLimit = dummyCallback,
     } = props;
     const { t } = useTranslation();
     const [size, setSize] = useState(checkSize());
@@ -51,6 +55,15 @@ export function SearchBar(props: Props) {
         onChange(event.target.value);
     };
 
+    const handleChangeLimit = (limit: number) => {
+        onChangeLimit(limit);
+    };
+
+    const handleReset = () => {
+        setShowReset(false);
+        onReset();
+    };
+
     return (
         <form onSubmit={handleSearch} className="fixed">
             <div className="p-[.2rem] sm:p-1 bg-slate-400 rounded-xl">
@@ -71,11 +84,60 @@ export function SearchBar(props: Props) {
                     <button
                         type="button"
                         className="btn btn-ghost btn-circle btn-xs sm:btn-sm absolute top-2 right-2 sm:top-3"
-                        onClick={onReset}
+                        onClick={handleReset}
                     >
                         <MdClose size={size} className=" text-slate-400" />
                     </button>
                 )}
+
+                <div className="flex items-center justify-between mx-1">
+                    <span className="text-slate-600 sm:text-lg">Limit</span>
+
+                    <div className="form-control ">
+                        <label className="label cursor-pointer">
+                            <span className="label-text text-slate-600 mr-1 sm:mr-2 sm:text-lg">
+                                100
+                            </span>
+                            <input
+                                type="radio"
+                                name="radio-6"
+                                className="radio radio-xs sm:radio-md checked:bg-primary"
+                                onChange={() => handleChangeLimit(100)}
+                                defaultChecked={limit === 100}
+                            />
+                        </label>
+                    </div>
+
+                    <div className="form-control ">
+                        <label className="label cursor-pointer">
+                            <span className="label-text text-slate-600 mr-1 sm:mr-2 sm:text-lg">
+                                500
+                            </span>
+                            <input
+                                type="radio"
+                                name="radio-6"
+                                className="radio radio-xs sm:radio-md checked:bg-primary"
+                                onChange={() => handleChangeLimit(500)}
+                                defaultChecked={limit === 500}
+                            />
+                        </label>
+                    </div>
+
+                    <div className="form-control ">
+                        <label className="label cursor-pointer">
+                            <span className="label-text text-slate-600 mr-1 sm:mr-2 sm:text-lg">
+                                All
+                            </span>
+                            <input
+                                type="radio"
+                                name="radio-6"
+                                className="radio radio-xs sm:radio-md checked:bg-primary"
+                                onChange={() => handleChangeLimit(-1)}
+                                defaultChecked={limit === -1}
+                            />
+                        </label>
+                    </div>
+                </div>
             </div>
         </form>
     );

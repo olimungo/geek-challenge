@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import { Person } from 'models';
 import { CardPerson } from 'components';
+import { useStore } from 'hooks';
 
 type Props = {
     people: Person[];
@@ -13,6 +15,11 @@ export function PeopleList(props: Props) {
     const { people, searchBar } = props;
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const store = useStore();
+
+    useEffect(() => {
+        store.appTitle = t('people.list.title');
+    }, [store, t]);
 
     const handleSelect = (id: string) => navigate(`/people/${id}`);
 
@@ -24,7 +31,7 @@ export function PeopleList(props: Props) {
 
             {searchBar}
 
-            <ul className="w-11/12 sm:w-[37rem] mt-10">
+            <ul className="w-11/12 sm:w-[37rem] mt-24">
                 {people.map((person) => {
                     return (
                         <li key={person.id}>

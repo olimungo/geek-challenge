@@ -105,6 +105,7 @@ function defineDeletePerson(app: Express) {
 
 function defineGetPeople(app: Express) {
     app.get('/people', async (req, res) => {
-        return res.send(JSON.stringify(await getPeople()));
+        const query: any = req.query;
+        return res.send(JSON.stringify(await getPeople(query.limit)));
     });
 }
