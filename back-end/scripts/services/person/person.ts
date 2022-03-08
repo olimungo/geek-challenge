@@ -1,6 +1,6 @@
 import { writeFile, existsSync, mkdirSync } from 'fs';
 import * as path from 'path';
-import redisClient from '../../redisClient';
+import redisClient from '../../redis-client';
 
 // Save avatars in the folders where the base script was launched
 const AVATARS_FOLDER = path.join(process.cwd(), 'avatars');
@@ -21,7 +21,11 @@ export async function getPerson(id: string) {
 
 export async function getPeople(limit: string) {
     const redis = await redisClient();
-    const ids = await redis.zRange('index:person:firstname', 0, limit);
+    const ids = await redis.zRange(
+        'index:person:firstname',
+        0,
+        Number(limit) - 1
+    );
     const people = [];
 
     await Promise.all(

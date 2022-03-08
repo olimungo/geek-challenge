@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import { Person } from 'models';
 import { CardPerson } from 'components';
-import { useStore } from 'hooks';
+// import { useStore } from 'hooks';
 
 type Props = {
     people: Person[];
@@ -15,11 +15,11 @@ export function PeopleList(props: Props) {
     const { people, searchBar } = props;
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const store = useStore();
+    // const store = useStore();
 
-    useEffect(() => {
-        store.appTitle = t('people.list.title');
-    }, [store, t]);
+    // useEffect(() => {
+    //     store.appTitle = t('people.list.title');
+    // }, [store, t]);
 
     const handleSelect = (id: string) => navigate(`/people/${id}`);
 

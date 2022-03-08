@@ -1,1 +1,1 @@
-export * from './use-store';
+export const toto = '';
