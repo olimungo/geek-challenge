@@ -24,7 +24,6 @@ export function PeopleEdit() {
     const [selectedFile, setSelectedFile] = useState<File>();
     const { getPerson, updatePerson, uploadAvatar, deletePerson } =
         usePeopleStore();
-
     const form = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
