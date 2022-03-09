@@ -1,5 +1,6 @@
 import { Express } from 'express';
 import { v4 as uuidv4 } from 'uuid';
+import { createPeople } from '../../mock-data';
 import {
     setPerson,
     getPerson,
@@ -14,8 +15,9 @@ export function defineRoutes(app: Express) {
     defineSearch(app);
     definePostAvatar(app);
     defineGetAvatar(app);
-    defineGetPerson(app);
+    defineCreatePeople(app);
     definePutPerson(app);
+    defineGetPerson(app);
     defineDeletePerson(app);
     defineGetPeople(app);
 }
@@ -106,6 +108,16 @@ function defineDeletePerson(app: Express) {
 function defineGetPeople(app: Express) {
     app.get('/people', async (req, res) => {
         const query: any = req.query;
-        return res.send(JSON.stringify(await getPeople(query.limit)));
+        return res.send(JSON.stringify(await getPeople(Number(query.limit))));
+    });
+}
+
+function defineCreatePeople(app: Express) {
+    app.get('/people/create', async (req, res) => {
+        const query: any = req.query;
+
+        createPeople(Number(query.count), query.withAvatar === 'true');
+
+        return res.sendStatus(200);
     });
 }

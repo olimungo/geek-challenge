@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RiCheckDoubleFill } from 'react-icons/ri';
-import { MdArrowBack, MdCheck, MdDelete } from 'react-icons/md';
+import { MdArrowBack, MdCheck } from 'react-icons/md';
+import { ConfirmButton } from 'components';
 
 type Props = {
     showDelete?: boolean;
@@ -17,25 +16,6 @@ export function CrudActions(props: Props) {
         onCancel = dummyCallback,
         onDelete = dummyCallback,
     } = props;
-    const [toConfirm, setToConfirm] = useState(false);
-    const [toConfirmTimer, setToConfirmTimer] = useState<NodeJS.Timeout>();
-
-    useEffect(() => {
-        return () => {
-            if (toConfirmTimer) {
-                clearTimeout(toConfirmTimer);
-            }
-        };
-    }, [toConfirmTimer]);
-
-    const handleConfirm = () => {
-        const timer = setTimeout(() => {
-            setToConfirm(false);
-        }, 2000);
-
-        setToConfirmTimer(timer);
-        setToConfirm(true);
-    };
 
     return (
         <div>
@@ -50,26 +30,13 @@ export function CrudActions(props: Props) {
                 </button>
 
                 <div className="flex items-center">
-                    {showDelete && !toConfirm && (
-                        <button
-                            type="button"
-                            className="btn btn-sm sm:btn-md btn-secondary flex items-center mr-5"
-                            onClick={handleConfirm}
-                        >
-                            <MdDelete size="1.3rem" className="mr-2" />{' '}
-                            {t('crud-actions.delete')}
-                        </button>
-                    )}
-
-                    {toConfirm && (
-                        <button
-                            type="button"
-                            className="btn btn-sm sm:btn-md btn-secondary flex items-center mr-5"
-                            onClick={onDelete}
-                        >
-                            <RiCheckDoubleFill size="1.3rem" className="mr-2" />{' '}
-                            {t('crud-actions.confirm')}
-                        </button>
+                    {showDelete && (
+                        <div className="mr-5">
+                            <ConfirmButton
+                                label={t('crud-actions.delete')}
+                                onConfirm={onDelete}
+                            />
+                        </div>
                     )}
 
                     <button

@@ -19,12 +19,12 @@ export async function getPerson(id: string) {
     return person;
 }
 
-export async function getPeople(limit: string) {
+export async function getPeople(limit: number) {
     const redis = await redisClient();
     const ids = await redis.zRange(
         'index:person:firstname',
         0,
-        Number(limit) - 1
+        limit === -1 ? limit : limit - 1
     );
     const people = [];
 

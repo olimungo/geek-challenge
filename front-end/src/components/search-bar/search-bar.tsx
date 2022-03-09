@@ -49,7 +49,7 @@ export function SearchBar() {
     };
 
     return (
-        <form onSubmit={handleSearch} className="fixed z-50">
+        <form onSubmit={handleSearch} className="fixed z-40">
             <div className="p-[.2rem] sm:p-1 bg-slate-400 rounded-xl">
                 <MdSearch
                     size={size}

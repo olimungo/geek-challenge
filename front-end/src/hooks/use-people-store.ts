@@ -7,6 +7,7 @@ import {
     updatePerson,
     uploadAvatar,
     deletePerson,
+    createPeople,
 } from 'services';
 
 const DEFAULT_LIST_LIMIT = 100;
@@ -23,6 +24,7 @@ interface PeopleStore {
     updatePerson: (person: Person) => Promise<string>;
     deletePerson: (id: string) => void;
     uploadAvatar: (id: string, data: FormData) => void;
+    createPeople: (count: number, withAvatar: boolean) => void;
 }
 
 export const usePeopleStore = create<PeopleStore>((set, get) => ({
@@ -71,4 +73,5 @@ export const usePeopleStore = create<PeopleStore>((set, get) => ({
         return deletePerson(id);
     },
     uploadAvatar: async (id, data) => uploadAvatar(id, data),
+    createPeople: async (count, withAvatar) => createPeople(count, withAvatar),
 }));

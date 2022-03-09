@@ -4,7 +4,7 @@ import { setPerson } from '../services';
 const fs = require('fs');
 const client = require('https');
 
-const TO_BE_CREATED_COUNT = 1000;
+// faker.setLocale('fr');
 
 async function downloadImage(url, filepath) {
     return new Promise((resolve, reject) => {
@@ -18,7 +18,7 @@ async function downloadImage(url, filepath) {
                 res.resume();
                 reject(
                     new Error(
-                        `Request Failed With a Status Code: ${res.statusCode}`
+                        `Request Failed: ${res.statusCode} for ${url} (${filepath})`
                     )
                 );
             }
@@ -26,13 +26,11 @@ async function downloadImage(url, filepath) {
     });
 }
 
-// faker.setLocale('fr');
-
-(async () => {
-    for (let i = 0; i < TO_BE_CREATED_COUNT; i++) {
+export async function createPeople(count: number, withAvatar: boolean) {
+    for (let i = 0; i < count; i++) {
         const id = uuidv4();
 
-        await setPerson(id, {
+        setPerson(id, {
             firstname: faker.name.firstName(),
             lastname: faker.name.lastName(),
             address: faker.address.streetAddress(),
@@ -40,10 +38,10 @@ async function downloadImage(url, filepath) {
             country: faker.address.country(),
         });
 
-        // await downloadImage(faker.image.avatar(), `./avatars/${id}`)
-        //     .then(console.log)
-        //     .catch(console.error);
+        if (withAvatar) {
+            await downloadImage(faker.image.avatar(), `avatars/${id}`)
+                .then(console.log)
+                .catch(console.error);
+        }
     }
-
-    process.exit();
-})();
+}

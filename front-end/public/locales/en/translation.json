@@ -3,7 +3,8 @@
         "title": "geekChallenge",
         "homepage": "Homepage",
         "people": "People",
-        "about": "About us"
+        "about": "About us",
+        "people-factory": "People factory"
     },
     "homepage": {
         "hero": "Who's the hero?",
@@ -25,6 +26,12 @@
             "city": "City",
             "country": "Country",
             "upload": "Upload your avatar"
+        },
+        "factory": {
+            "title": "People factory",
+            "range-label": "Number of people to generate",
+            "with-avatar": "With avatar?",
+            "generate": "Generate"
         }
     },
     "crud-actions": {
@@ -32,6 +39,9 @@
         "delete": "Delete",
         "confirm": "Confirm",
         "save": "Save"
+    },
+    "confirm-button": {
+        "confirm": "Confirm"
     },
     "search-bar": {
         "placeholder": "Enter the text to search"

@@ -18,7 +18,6 @@ export function Header(props: Props) {
     const [displayBrand, setDisplayBrand] = useState(false);
 
     useEffect(() => {
-        console.log(location.pathname);
         setTitle('');
         setDisplayCount(false);
         setDisplayBrand(true);
@@ -26,6 +25,9 @@ export function Header(props: Props) {
         if (location.pathname === '/people') {
             setTitle(t('people.list.title'));
             setDisplayCount(true);
+            setDisplayBrand(false);
+        } else if (location.pathname === '/people/factory') {
+            setTitle(t('people.factory.title'));
             setDisplayBrand(false);
         } else if (location.pathname.match(/\/people\//g)) {
             setTitle(t('people.edit.title'));
@@ -36,7 +38,7 @@ export function Header(props: Props) {
     return (
         <div className="navbar bg-base-100 shadow-xl rounded-box fixed top-0 z-50">
             <div className="navbar-start">
-                <div className="dropdown dropdown-hover">
+                <div className="dropdown dropdown-hover z-40">
                     <label
                         tabIndex={0}
                         className="btn btn-ghost btn-circle flex mr-7"
@@ -56,6 +58,11 @@ export function Header(props: Props) {
                         <li>
                             <div onClick={() => navigate('/people')}>
                                 {t('header.people')}
+                            </div>
+                        </li>
+                        <li>
+                            <div onClick={() => navigate('/people/factory')}>
+                                {t('header.people-factory')}
                             </div>
                         </li>
                         <li>

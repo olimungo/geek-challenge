@@ -3,7 +3,8 @@
         "title": "challengeDeOufs",
         "homepage": "Page d'accueil",
         "people": "Personnes",
-        "about": "A propos de nous"
+        "about": "A propos de nous",
+        "people-factory": "Usine à personnes"
     },
     "homepage": {
         "hero": "Qui est le héro ?",
@@ -25,6 +26,12 @@
             "city": "Ville",
             "country": "Pays",
             "upload": "Télécharger votre avatar"
+        },
+        "factory": {
+            "title": "Usine à personnes",
+            "range-label": "Nombre de personnes à générer",
+            "with-avatar": "Avec avatar ?",
+            "generate": "Générer"
         }
     },
     "crud-actions": {
@@ -32,6 +39,9 @@
         "delete": "Supprimer",
         "confirm": "Confirmer",
         "save": "Sauver"
+    },
+    "confirm-button": {
+        "confirm": "Confirmer"
     },
     "search-bar": {
         "placeholder": "Entrez le texte à rechercher"

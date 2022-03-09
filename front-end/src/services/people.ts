@@ -43,3 +43,9 @@ export const uploadAvatar = (id: string, data: FormData) => {
         body: data,
     });
 };
+
+export const createPeople = (count: number, withAvatar: boolean) => {
+    return fetch(
+        `${backEnd}/people/create?count=${count}&withAvatar=${withAvatar}`
+    );
+};

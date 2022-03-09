@@ -6,6 +6,5 @@
         "target": "es6",
         "module": "commonjs",
         "baseUrl": "./scripts"
-    },
-    "exclude": ["scripts/mock-data/**/*"]
+    }
 }
