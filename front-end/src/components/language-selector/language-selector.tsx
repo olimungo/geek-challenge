@@ -3,10 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { MdLanguage, MdArrowDropDown } from 'react-icons/md';
 import { languages } from 'models/language';
 
-type Props = {};
-
-export function LanguageSelector(props: Props) {
-    // const {} = props;
+export function LanguageSelector() {
     const { i18n } = useTranslation();
     const [currentKey, setCurrentKey] = useState(i18n.language);
 

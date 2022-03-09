@@ -1,6 +1,6 @@
 {
     "header": {
-        "title": "concoursDeTarés",
+        "title": "challengeDeOufs",
         "homepage": "Page d'accueil",
         "people": "Personnes",
         "about": "A propos de nous"
@@ -14,10 +14,11 @@
     },
     "people": {
         "list": {
-            "title": "Personnes",
+            "title": "PERSONNES",
             "add-new": "Ajouter"
         },
         "edit": {
+            "title": "MODIFIER UNE PERSONNE",
             "firstname": "Prénom",
             "lastname": "Nom",
             "address": "Adresse",
@@ -31,5 +32,8 @@
         "delete": "Supprimer",
         "confirm": "Confirmer",
         "save": "Sauver"
+    },
+    "search-bar": {
+        "placeholder": "Entrez le texte à rechercher"
     }
 }

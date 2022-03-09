@@ -1,4 +1,5 @@
 import { Person } from 'models';
+import { backEnd } from 'services';
 
 type Props = { data: Person; onSelect: (id: string) => void };
 
@@ -11,8 +12,20 @@ export function CardPerson(props: Props) {
             key={data.id}
             onClick={() => onSelect(data.id)}
         >
-            <div className="flex justify-center text-xl sm:text-2xl py-3 sm:py-5">
-                {data.firstname} {data.lastname}
+            <div className="flex items-center">
+                <div className="avatar m-4">
+                    <div className="w-24 rounded-full">
+                        <img
+                            id="avatar"
+                            srcSet={`${backEnd}/avatar/${data.id}`}
+                            alt="Avatar"
+                        />
+                    </div>
+                </div>
+
+                <div className="flex justify-center text-xl sm:text-2xl pl-5 sm:pl-10">
+                    {data.firstname} {data.lastname}
+                </div>
             </div>
 
             {(data.address || data.city || data.country) && (

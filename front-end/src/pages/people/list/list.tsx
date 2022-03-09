@@ -1,36 +1,31 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
-import { Person, sortPeople } from 'models';
-import { CardPerson } from 'components';
+import { CardPerson, SearchBar } from 'components';
+import { usePeopleStore } from 'hooks';
+import { useEffect } from 'react';
 
 export function PeopleList() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const [people, setPeople] = useState<Person[]>([]);
+    const { people, getPeople } = usePeopleStore();
 
     useEffect(() => {
-        fetch(
-            `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}/people`
-        )
-            .then((response) => response.json())
-            .then((people: Person[]) => setPeople(people.sort(sortPeople)));
-    }, []);
-
-    const handleSelect = (id: string) => navigate(`/people/${id}`);
+        getPeople();
+    }, [getPeople]);
 
     return (
-        <div className="flex flex-col items-center">
-            <h1 className="text-3xl sm:text-5xl p-1 sm:p-4">
-                {t('people.list.title')}
-            </h1>
+        <div className="flex flex-col items-center pt">
+            <SearchBar />
 
-            <ul className="w-11/12 sm:w-[37rem]">
+            <ul className="w-11/12 sm:w-[37rem] mt-24">
                 {people.map((person) => {
                     return (
                         <li key={person.id}>
-                            <CardPerson data={person} onSelect={handleSelect} />
+                            <CardPerson
+                                data={person}
+                                onSelect={(id) => navigate(`/people/${id}`)}
+                            />
                         </li>
                     );
                 })}
@@ -38,7 +33,7 @@ export function PeopleList() {
 
             <button
                 className="btn btn-md btn-primary mt-10 sm:btn-lg fixed bottom-10 right-10"
-                onClick={() => handleSelect('new')}
+                onClick={() => navigate('/people/new')}
             >
                 <MdOutlineAddCircleOutline size="1.5rem" className="mr-2" />
                 {t('people.list.add-new')}
