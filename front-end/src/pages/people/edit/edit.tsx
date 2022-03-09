@@ -4,17 +4,11 @@ import { MdUpload } from 'react-icons/md';
 import { Person } from 'models';
 import { CrudActions } from 'components';
 import { useTranslation } from 'react-i18next';
-// import { useStore } from 'hooks';
+import { usePeopleStore } from 'hooks';
+import { backEnd } from 'services';
 
-type State = {
-    firstname: string;
-    lastname: string;
-    address: string;
-    city: string;
-    country: string;
-};
-
-const defaultState: State = {
+const defaultPerson: Person = {
+    id: 'new',
     firstname: '',
     lastname: '',
     address: '',
@@ -26,60 +20,42 @@ export function PeopleEdit() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
-    const [state, setState] = useState<State>(defaultState);
+    const [person, setPerson] = useState<Person>(defaultPerson);
     const [selectedFile, setSelectedFile] = useState<File>();
-    // const store = useStore();
+    const { getPerson, updatePerson, uploadAvatar, deletePerson } =
+        usePeopleStore();
 
-    const backEnd = `http://${window.location.hostname}:${process.env.REACT_APP_BACK_END_PORT}`;
     const form = useRef<HTMLFormElement>(null);
 
-    // useEffect(() => {
-    //     store.appTitle = t('people.edit.title');
-    // }, [store, t]);
-
     useEffect(() => {
-        if (id !== 'new') {
-            fetch(`${backEnd}/people/${id}`)
-                .then((response) => response.json())
-                .then((person: Person) => {
-                    setState((state) => ({ ...state, ...person }));
-                });
+        if (id && id !== 'new') {
+            getPerson(id).then((person) => setPerson(person));
         }
-    }, [id, backEnd]);
+    }, [id, getPerson]);
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         if (form) {
-            fetch(`${backEnd}/people/${id}`, {
-                method: 'PUT',
-                headers: {
-                    Accept: 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(state),
-            })
-                .then((response) => response.json())
-                .then(async (response) => {
-                    if (selectedFile) {
-                        const data = new FormData();
+            const id = await updatePerson(person);
 
-                        data.append('avatar', selectedFile);
+            if (selectedFile) {
+                const data = new FormData();
+                data.append('avatar', selectedFile);
 
-                        await fetch(`${backEnd}/people/${response.id}/avatar`, {
-                            method: 'POST',
-                            body: data,
-                        });
-                    }
-                })
-                .then(() => navigate('/people'));
+                uploadAvatar(id, data);
+            }
+
+            navigate(-1);
         }
     };
 
     const handleDelete = () => {
-        fetch(`${backEnd}/people/${id}`, { method: 'DELETE' }).then(() =>
-            navigate('/people')
-        );
+        if (id) {
+            deletePerson(id);
+        }
+
+        navigate(-1);
     };
 
     const handleUpload = (files: FileList | null) => {
@@ -92,7 +68,7 @@ export function PeopleEdit() {
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setState((state) => ({
+        setPerson((state) => ({
             ...state,
             [event.target.name]: event.target.value,
         }));
@@ -112,7 +88,7 @@ export function PeopleEdit() {
                             <div className="w-24 rounded-full">
                                 <img
                                     id="avatar"
-                                    srcSet={`${backEnd}/people/${id}/avatar`}
+                                    srcSet={`${backEnd}/avatar/${id}`}
                                     alt="Avatar"
                                 />
                             </div>
@@ -130,7 +106,7 @@ export function PeopleEdit() {
                                 name="firstname"
                                 className="input input-bordered w-full max-w-xs"
                                 type="text"
-                                value={state.firstname}
+                                value={person.firstname}
                                 onChange={handleInputChange}
                                 required
                             />
@@ -149,7 +125,7 @@ export function PeopleEdit() {
                                 name="lastname"
                                 className="input input-bordered w-full max-w-xs"
                                 type="text"
-                                value={state.lastname}
+                                value={person.lastname}
                                 onChange={handleInputChange}
                                 required
                             />
@@ -167,7 +143,7 @@ export function PeopleEdit() {
                                 name="address"
                                 className="input input-bordered w-full max-w-xs"
                                 type="text"
-                                value={state.address}
+                                value={person.address}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -184,7 +160,7 @@ export function PeopleEdit() {
                                 name="city"
                                 className="input input-bordered w-full max-w-xs"
                                 type="text"
-                                value={state.city}
+                                value={person.city}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -201,7 +177,7 @@ export function PeopleEdit() {
                                 name="country"
                                 className="input input-bordered w-full max-w-xs"
                                 type="text"
-                                value={state.country}
+                                value={person.country}
                                 onChange={handleInputChange}
                             />
                         </div>

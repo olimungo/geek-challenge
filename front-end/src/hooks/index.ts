@@ -1,1 +1,1 @@
-export const toto = '';
+export * from './use-people-store';

@@ -59,7 +59,7 @@ function defineSearch(app: Express) {
 }
 
 function definePostAvatar(app: Express) {
-    app.post('/people/:id/avatar', async (req, res) => {
+    app.post('/avatar/:id', async (req, res) => {
         const avatarFile: any = req.files.avatar;
         const id = req.params.id;
 
@@ -70,7 +70,7 @@ function definePostAvatar(app: Express) {
 }
 
 function defineGetAvatar(app: Express) {
-    app.get('/people/:id/avatar', async (req, res) => {
+    app.get('/avatar/:id', async (req, res) => {
         getAvatar(res, req.params.id);
     });
 }

@@ -1,27 +1,12 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MdSearch, MdClose } from 'react-icons/md';
+import { usePeopleStore } from 'hooks';
 
-type Props = {
-    pattern: string;
-    limit: number;
-    onChange: (pattern: string) => void;
-    onSearch: (pattern: string) => void;
-    onReset: () => void;
-    onChangeLimit: (limit: number) => void;
-};
-
-export function SearchBar(props: Props) {
-    const dummyCallback = () => true;
-    const {
-        pattern,
-        limit,
-        onChange = dummyCallback,
-        onSearch = dummyCallback,
-        onReset = dummyCallback,
-        onChangeLimit = dummyCallback,
-    } = props;
+export function SearchBar() {
     const { t } = useTranslation();
+    const { limit, setLimit, pattern, setPattern, getPeople, searchPeople } =
+        usePeopleStore();
     const [size, setSize] = useState(checkSize());
     const [showReset, setShowReset] = useState(pattern !== '' ? true : false);
 
@@ -45,27 +30,26 @@ export function SearchBar(props: Props) {
         };
     }, []);
 
+    useEffect(() => {
+        setShowReset(pattern !== '');
+    }, [pattern]);
+
     const handleSearch = (event: FormEvent) => {
         event.preventDefault();
-        onSearch(pattern);
+        searchPeople(pattern);
     };
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setShowReset(event.target.value !== '');
-        onChange(event.target.value);
-    };
-
-    const handleChangeLimit = (limit: number) => {
-        onChangeLimit(limit);
+    const handlePatternChange = (pattern: string) => {
+        setPattern(pattern);
     };
 
     const handleReset = () => {
-        setShowReset(false);
-        onReset();
+        setPattern('');
+        getPeople(true);
     };
 
     return (
-        <form onSubmit={handleSearch} className="fixed">
+        <form onSubmit={handleSearch} className="fixed z-50">
             <div className="p-[.2rem] sm:p-1 bg-slate-400 rounded-xl">
                 <MdSearch
                     size={size}
@@ -77,7 +61,9 @@ export function SearchBar(props: Props) {
                     placeholder={t('search-bar.placeholder')}
                     className="input input-sm sm:input w-72 sm:w-96 px-8 sm:px-14 sm:text-xl"
                     value={pattern}
-                    onChange={handleChange}
+                    onChange={(event) =>
+                        handlePatternChange(event.target.value)
+                    }
                 />
 
                 {showReset && (
@@ -102,7 +88,7 @@ export function SearchBar(props: Props) {
                                 type="radio"
                                 name="radio-6"
                                 className="radio radio-xs sm:radio-md checked:bg-primary"
-                                onChange={() => handleChangeLimit(100)}
+                                onChange={() => setLimit(100)}
                                 defaultChecked={limit === 100}
                             />
                         </label>
@@ -117,7 +103,7 @@ export function SearchBar(props: Props) {
                                 type="radio"
                                 name="radio-6"
                                 className="radio radio-xs sm:radio-md checked:bg-primary"
-                                onChange={() => handleChangeLimit(500)}
+                                onChange={() => setLimit(500)}
                                 defaultChecked={limit === 500}
                             />
                         </label>
@@ -132,7 +118,7 @@ export function SearchBar(props: Props) {
                                 type="radio"
                                 name="radio-6"
                                 className="radio radio-xs sm:radio-md checked:bg-primary"
-                                onChange={() => handleChangeLimit(-1)}
+                                onChange={() => setLimit(-1)}
                                 defaultChecked={limit === -1}
                             />
                         </label>

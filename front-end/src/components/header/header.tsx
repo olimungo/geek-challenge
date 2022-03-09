@@ -1,32 +1,37 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdMenu } from 'react-icons/md';
 import { ImLab } from 'react-icons/im';
 import { LanguageSelector } from 'components';
-// import { useStore } from 'hooks';
+import { usePeopleStore } from 'hooks';
 
 type Props = {};
 
 export function Header(props: Props) {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    // const store = useStore();
-    // const location = useLocation();
-    // const [title, setTitle] = useState('');
-    // const [badgeCount, setBadgeCount] = useState(-1);
+    const { people } = usePeopleStore();
+    const location = useLocation();
+    const [title, setTitle] = useState('');
+    const [displayCount, setDisplayCount] = useState(false);
+    const [displayBrand, setDisplayBrand] = useState(false);
 
-    // useEffect(() => {
-    //     if (location.pathname === '/people') {
-    //         setTitle(t('people.list.title'));
-    //         setBadgeCount(store.people.length);
-    //     } else if (location.pathname.match(/\/people\//g)) {
-    //         setTitle(t('people.edit.title'));
-    //         setBadgeCount(-1);
-    //     } else {
-    //         setTitle('');
-    //         setBadgeCount(-1);
-    //     }
-    // }, [location.pathname, t, store.people]);
+    useEffect(() => {
+        console.log(location.pathname);
+        setTitle('');
+        setDisplayCount(false);
+        setDisplayBrand(true);
+
+        if (location.pathname === '/people') {
+            setTitle(t('people.list.title'));
+            setDisplayCount(true);
+            setDisplayBrand(false);
+        } else if (location.pathname.match(/\/people\//g)) {
+            setTitle(t('people.edit.title'));
+            setDisplayBrand(false);
+        }
+    }, [location.pathname, t]);
 
     return (
         <div className="navbar bg-base-100 shadow-xl rounded-box fixed top-0 z-50">
@@ -63,21 +68,25 @@ export function Header(props: Props) {
 
                 <div className="flex items-center">
                     <ImLab size="1.3rem" className="mr-3" />
-                    <label className="normal-case text-2xl">
-                        {t('header.title')}
-                    </label>
+
+                    {displayBrand && (
+                        <label className="normal-case text-2xl">
+                            {t('header.title')}
+                        </label>
+                    )}
                 </div>
             </div>
 
             <div className="navbar-center">
-                {/* <div className="text-xl text-slate-500 flex items-center">
+                <div className="text-xl text-slate-500 flex items-center">
                     {title}
-                    {badgeCount !== -1 && (
+
+                    {displayCount && (
                         <div className="badge badge-secondary ml-2">
-                            {badgeCount}
+                            {people.length}
                         </div>
                     )}
-                </div> */}
+                </div>
             </div>
 
             <div className="navbar-end">

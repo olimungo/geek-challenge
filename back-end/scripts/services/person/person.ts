@@ -68,7 +68,12 @@ export async function deletePerson(id: string) {
 
 export async function deleteValueInIndex(index: string, id: string) {
     const redis = await redisClient();
-    const scan = await redis.zScan(index, 0, { MATCH: `*${id}*`, COUNT: 1000 });
+    const scan = await redis.zScan(index, 0, {
+        MATCH: `*${id}*`,
+        // Redis might not send back a result when there are too few items in the set,
+        // so kind of forcing it by specifying a large count.
+        COUNT: 100000,
+    });
 
     await Promise.all(
         scan.members.map(async (member) => {
@@ -83,10 +88,12 @@ export async function updateIndex(key: string, id: string, value: string) {
 
     await deleteValueInIndex(index, id);
 
-    await redis.zAdd(index, {
-        score: 0,
-        value: `${value.toLowerCase()}:${id}`,
-    });
+    if (value) {
+        await redis.zAdd(index, {
+            score: 0,
+            value: `${value.toLowerCase()}:${id}`,
+        });
+    }
 }
 
 export async function deleteValueInPersonIndices(id: string) {
@@ -103,7 +110,7 @@ export async function getIdsFromPattern(index: string, pattern: string) {
         MATCH: `*${pattern}*`,
         // Redis might not send back a result when there are too few items in the set,
         // so kind of forcing it by specifying a large count.
-        COUNT: 1000,
+        COUNT: 100000,
     });
 
     return result.members.map((hit) => {
