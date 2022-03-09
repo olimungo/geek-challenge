@@ -16,19 +16,19 @@ async function downloadImage(url, filepath) {
             } else {
                 // Consume response data to free up memory
                 res.resume();
-                reject(
-                    new Error(
-                        `Request Failed: ${res.statusCode} for ${url} (${filepath})`
-                    )
-                );
+                reject(new Error(url));
             }
         });
     });
 }
 
 export async function createPeople(count: number, withAvatar: boolean) {
+    const ids = [];
+
     for (let i = 0; i < count; i++) {
         const id = uuidv4();
+
+        ids.push(id);
 
         setPerson(id, {
             firstname: faker.name.firstName(),
@@ -37,11 +37,39 @@ export async function createPeople(count: number, withAvatar: boolean) {
             city: faker.address.city(),
             country: faker.address.country(),
         });
+    }
 
-        if (withAvatar) {
-            await downloadImage(faker.image.avatar(), `avatars/${id}`)
-                .then(console.log)
-                .catch(console.error);
+    let countSaved = 0;
+    let countFailed = 0;
+
+    if (withAvatar) {
+        while (ids.length > 0) {
+            const id = ids.pop();
+
+            await new Promise((resolve) => {
+                downloadImage(faker.image.avatar(), `avatars/${id}`)
+                    .then((filepath) => {
+                        console.log(`> File saved to ${filepath} `);
+                        countSaved++;
+                    })
+                    .catch((url) => {
+                        console.log(`X Getting ${url} failed for ${id} `);
+                        ids.push(id);
+                        countFailed++;
+                    });
+
+                // Throttle to prevent orverloading the system
+                setTimeout(() => {
+                    resolve(true);
+                }, 50);
+            });
         }
     }
+
+    // Wait for the last downloads to finish
+    setTimeout(() => {
+        console.log(`Files saved to disk: ${countSaved}`);
+        console.log(`Failed to save to disk: ${countFailed}`);
+        console.log('ids', ids);
+    }, 3000);
 }
