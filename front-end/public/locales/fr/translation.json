@@ -28,10 +28,14 @@
             "upload": "Télécharger votre avatar"
         },
         "factory": {
-            "title": "Usine à personnes",
+            "title": "USINE A PERSONNES",
             "range-label": "Nombre de personnes à générer",
             "with-avatar": "Avec avatar ?",
-            "generate": "Générer"
+            "generate": "Générer",
+            "generate-message": "Génération en cours...",
+            "empty-db": "Vider la base de données",
+            "empty": "Vider",
+            "empty-message": "Suppression en cours..."
         }
     },
     "crud-actions": {

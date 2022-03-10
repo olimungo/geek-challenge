@@ -4,7 +4,7 @@ import { setPerson } from '../services';
 const fs = require('fs');
 const client = require('https');
 
-// faker.setLocale('fr');
+faker.setLocale('fr');
 
 async function downloadImage(url, filepath) {
     return new Promise((resolve, reject) => {
@@ -71,5 +71,5 @@ export async function createPeople(count: number, withAvatar: boolean) {
         console.log(`Files saved to disk: ${countSaved}`);
         console.log(`Failed to save to disk: ${countFailed}`);
         console.log('ids', ids);
-    }, 3000);
+    }, 5000);
 }

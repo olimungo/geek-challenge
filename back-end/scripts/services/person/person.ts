@@ -1,4 +1,4 @@
-import { writeFile, existsSync, mkdirSync } from 'fs';
+import { writeFile, existsSync, mkdirSync, readdir, unlink } from 'fs';
 import * as path from 'path';
 import redisClient from '../../redis-client';
 
@@ -137,4 +137,23 @@ export function getAvatar(response, id: string) {
     } else {
         response.sendFile('no-avatar.png', { root: ASSETS_FOLDER });
     }
+}
+
+export async function deletePeople() {
+    const redis = await redisClient();
+    const peopleKeys = await redis.keys('person:*');
+    const peopleIndices = await redis.keys('index:person:*');
+
+    peopleKeys.map((key: string) => redis.del(key));
+    peopleIndices.map((key: string) => redis.del(key));
+
+    readdir(AVATARS_FOLDER, (err, files) => {
+        if (err) throw err;
+
+        for (const file of files) {
+            unlink(path.join(AVATARS_FOLDER, file), (err) => {
+                if (err) throw err;
+            });
+        }
+    });
 }

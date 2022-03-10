@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MdDelete } from 'react-icons/md';
 import { RiCheckDoubleFill } from 'react-icons/ri';
 
 type Props = {
-    label?: string;
+    label: string;
+    icon: JSX.Element;
     onConfirm: () => void;
 };
 
 export function ConfirmButton(props: Props) {
     const dummyCallback = () => true;
     const { t } = useTranslation();
-    const { label = 'DELETE', onConfirm = dummyCallback } = props;
+    const { label, icon, onConfirm = dummyCallback } = props;
     const [toConfirm, setToConfirm] = useState(false);
     const [toConfirmTimer, setToConfirmTimer] = useState<NodeJS.Timeout>();
 
@@ -32,6 +32,15 @@ export function ConfirmButton(props: Props) {
         setToConfirm(true);
     };
 
+    const handleConfirmed = () => {
+        if (toConfirmTimer) {
+            clearTimeout(toConfirmTimer);
+        }
+
+        setToConfirm(false);
+        onConfirm();
+    };
+
     return (
         <>
             {!toConfirm && (
@@ -40,7 +49,9 @@ export function ConfirmButton(props: Props) {
                     className="btn btn-sm sm:btn-md btn-secondary flex items-center"
                     onClick={handleConfirm}
                 >
-                    <MdDelete size="1.3rem" className="mr-2" /> {label}
+                    <div className="mr-2">{icon}</div>
+
+                    {label}
                 </button>
             )}
 
@@ -48,7 +59,7 @@ export function ConfirmButton(props: Props) {
                 <button
                     type="button"
                     className="btn btn-sm sm:btn-md btn-secondary flex items-center"
-                    onClick={onConfirm}
+                    onClick={handleConfirmed}
                 >
                     <RiCheckDoubleFill size="1.3rem" className="mr-2" />{' '}
                     {t('confirm-button.confirm')}

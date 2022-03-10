@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { MdArrowBack, MdCheck } from 'react-icons/md';
+import { MdArrowBack, MdCheck, MdDelete } from 'react-icons/md';
 import { ConfirmButton } from 'components';
 
 type Props = {
@@ -34,6 +34,7 @@ export function CrudActions(props: Props) {
                         <div className="mr-5">
                             <ConfirmButton
                                 label={t('crud-actions.delete')}
+                                icon={<MdDelete size={'1.3rem'} />}
                                 onConfirm={onDelete}
                             />
                         </div>

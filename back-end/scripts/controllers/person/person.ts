@@ -9,17 +9,19 @@ import {
     getAvatar,
     getPeople,
     getIdsFromPattern,
+    deletePeople as deletePeople,
 } from '../../services';
 
 export function defineRoutes(app: Express) {
     defineSearch(app);
     definePostAvatar(app);
     defineGetAvatar(app);
+    defineGetPeople(app);
+    defineDeletePeople(app);
     defineCreatePeople(app);
     definePutPerson(app);
     defineGetPerson(app);
     defineDeletePerson(app);
-    defineGetPeople(app);
 }
 
 function defineSearch(app: Express) {
@@ -118,6 +120,13 @@ function defineCreatePeople(app: Express) {
 
         createPeople(Number(query.count), query.withAvatar === 'true');
 
+        return res.sendStatus(200);
+    });
+}
+
+function defineDeletePeople(app: Express) {
+    app.get('/people/delete', async (req, res) => {
+        deletePeople();
         return res.sendStatus(200);
     });
 }

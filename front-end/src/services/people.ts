@@ -49,3 +49,7 @@ export const createPeople = (count: number, withAvatar: boolean) => {
         `${backEnd}/people/create?count=${count}&withAvatar=${withAvatar}`
     );
 };
+
+export const deletePeople = () => {
+    return fetch(`${backEnd}/people/delete`);
+};

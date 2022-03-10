@@ -28,10 +28,14 @@
             "upload": "Upload your avatar"
         },
         "factory": {
-            "title": "People factory",
+            "title": "PEOPLE FACTORY",
             "range-label": "Number of people to generate",
             "with-avatar": "With avatar?",
-            "generate": "Generate"
+            "generate": "Generate",
+            "generate-message": "Genration in progress...",
+            "empty-db": "Empty the database",
+            "empty": "Empty",
+            "empty-message": "Deletion in progress..."
         }
     },
     "crud-actions": {

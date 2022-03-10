@@ -8,6 +8,7 @@ import {
     uploadAvatar,
     deletePerson,
     createPeople,
+    deletePeople,
 } from 'services';
 
 const DEFAULT_LIST_LIMIT = 100;
@@ -25,6 +26,7 @@ interface PeopleStore {
     deletePerson: (id: string) => void;
     uploadAvatar: (id: string, data: FormData) => void;
     createPeople: (count: number, withAvatar: boolean) => void;
+    deletePeople: () => void;
 }
 
 export const usePeopleStore = create<PeopleStore>((set, get) => ({
@@ -54,14 +56,20 @@ export const usePeopleStore = create<PeopleStore>((set, get) => ({
     searchPeople: async (pattern) =>
         set({ people: await searchPeople(pattern) }),
     updatePerson: async (person) => {
-        set((state) => ({
-            people: [
-                ...state.people.filter((p) => p.id !== person.id),
-                person,
-            ].sort(sortPeople),
-        }));
+        return updatePerson(person).then((response) => {
+            if (person.id === 'new') {
+                person.id = response.id;
+            }
 
-        return updatePerson(person).then((response) => response.id);
+            set((state) => ({
+                people: [
+                    ...state.people.filter((p) => p.id !== person.id),
+                    person,
+                ].sort(sortPeople),
+            }));
+
+            return person.id;
+        });
     },
     deletePerson: async (id: string) => {
         set((state) => ({
@@ -73,5 +81,12 @@ export const usePeopleStore = create<PeopleStore>((set, get) => ({
         return deletePerson(id);
     },
     uploadAvatar: async (id, data) => uploadAvatar(id, data),
-    createPeople: async (count, withAvatar) => createPeople(count, withAvatar),
+    createPeople: async (count, withAvatar) => {
+        set({ people: [] });
+        createPeople(count, withAvatar);
+    },
+    deletePeople: async () => {
+        set({ people: [] });
+        deletePeople();
+    },
 }));
