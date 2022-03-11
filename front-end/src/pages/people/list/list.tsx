@@ -12,7 +12,8 @@ export function PeopleList() {
 
     useEffect(() => {
         getPeople();
-    }, [getPeople]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className="flex flex-col items-center pt">

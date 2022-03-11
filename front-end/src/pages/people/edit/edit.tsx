@@ -30,7 +30,8 @@ export function PeopleEdit() {
         if (id && id !== 'new') {
             getPerson(id).then((person) => setPerson(person));
         }
-    }, [id, getPerson]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
