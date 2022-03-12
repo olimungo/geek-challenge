@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
-import { CardPerson, SearchBar } from 'components';
+import { CardPerson, ResponsiveIcon, SearchBar } from 'components';
 import { usePeopleStore } from 'hooks';
 import { useEffect } from 'react';
 
@@ -16,10 +16,10 @@ export function PeopleList() {
     }, []);
 
     return (
-        <div className="flex flex-col items-center pt">
+        <div className="flex flex-col items-center pt-3 mb-20 sm:mb-12">
             <SearchBar />
 
-            <ul className="w-11/12 sm:w-[37rem] mt-24">
+            <ul className="w-11/12 xs:w-96 md:w-[31rem] mt-24 overflow-scroll">
                 {people.map((person) => {
                     return (
                         <li key={person.id}>
@@ -33,11 +33,11 @@ export function PeopleList() {
             </ul>
 
             <button
-                className="btn btn-md btn-primary mt-10 sm:btn-lg fixed bottom-10 right-10"
+                className="btn btn-md btn-primary mt-10 fixed bottom-24 right-6 md:bottom-6"
                 onClick={() => navigate('/people/new')}
             >
-                <MdOutlineAddCircleOutline size="1.5rem" className="mr-2" />
-                {t('people.list.add-new')}
+                <ResponsiveIcon icon={MdOutlineAddCircleOutline} />
+                <div className="ml-2">{t('people.list.add-new')}</div>
             </button>
         </div>
     );

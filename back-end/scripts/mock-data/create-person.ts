@@ -4,7 +4,7 @@ import { setPerson } from '../services';
 const fs = require('fs');
 const client = require('https');
 
-faker.setLocale('fr');
+// faker.setLocale('fr');
 
 async function downloadImage(url, filepath) {
     return new Promise((resolve, reject) => {
@@ -33,6 +33,8 @@ export async function createPeople(count: number, withAvatar: boolean) {
         setPerson(id, {
             firstname: faker.name.firstName(),
             lastname: faker.name.lastName(),
+            telephone: faker.phone.phoneNumber(),
+            email: faker.internet.email(),
             address: faker.address.streetAddress(),
             city: faker.address.city(),
             country: faker.address.country(),

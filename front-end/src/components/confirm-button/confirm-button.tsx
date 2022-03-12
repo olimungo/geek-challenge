@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IconType } from 'react-icons/lib';
+import { ResponsiveButton, ResponsiveIcon } from 'components/responsive';
 import { RiCheckDoubleFill } from 'react-icons/ri';
 
 type Props = {
     label: string;
-    icon: JSX.Element;
+    icon: IconType;
+    className?: string;
     onConfirm: () => void;
 };
 
 export function ConfirmButton(props: Props) {
     const dummyCallback = () => true;
     const { t } = useTranslation();
-    const { label, icon, onConfirm = dummyCallback } = props;
+    const { label, icon, className = '', onConfirm = dummyCallback } = props;
     const [toConfirm, setToConfirm] = useState(false);
     const [toConfirmTimer, setToConfirmTimer] = useState<NodeJS.Timeout>();
 
@@ -44,26 +47,23 @@ export function ConfirmButton(props: Props) {
     return (
         <>
             {!toConfirm && (
-                <button
-                    type="button"
-                    className="btn btn-sm sm:btn-md btn-secondary flex items-center"
+                <ResponsiveButton
+                    icon={icon}
+                    iconPosition="left"
+                    label={label}
                     onClick={handleConfirm}
-                >
-                    <div className="mr-2">{icon}</div>
-
-                    {label}
-                </button>
+                    className={className}
+                />
             )}
 
             {toConfirm && (
-                <button
-                    type="button"
-                    className="btn btn-sm sm:btn-md btn-secondary flex items-center"
+                <ResponsiveButton
+                    icon={RiCheckDoubleFill}
+                    iconPosition="left"
+                    label={t('confirm-button.confirm')}
                     onClick={handleConfirmed}
-                >
-                    <RiCheckDoubleFill size="1.3rem" className="mr-2" />{' '}
-                    {t('confirm-button.confirm')}
-                </button>
+                    className={className}
+                />
             )}
         </>
     );

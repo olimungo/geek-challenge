@@ -45,12 +45,16 @@ export async function setPerson(id: string, person: any) {
 
     await redis.hSet(personId, 'firstname', person.firstname);
     await redis.hSet(personId, 'lastname', person.lastname);
+    await redis.hSet(personId, 'email', person.email);
+    await redis.hSet(personId, 'telephone', person.telephone);
     await redis.hSet(personId, 'address', person.address);
     await redis.hSet(personId, 'city', person.city);
     await redis.hSet(personId, 'country', person.country);
 
     await updateIndex('person:firstname', id, person.firstname);
     await updateIndex('person:lastname', id, person.lastname);
+    await updateIndex('person:email', id, person.email);
+    await updateIndex('person:telephone', id, person.telephone);
     await updateIndex('person:address', id, person.address);
     await updateIndex('person:city', id, person.city);
     await updateIndex('person:country', id, person.country);
@@ -99,6 +103,8 @@ export async function updateIndex(key: string, id: string, value: string) {
 export async function deleteValueInPersonIndices(id: string) {
     await deleteValueInIndex(`index:person:firstname`, id);
     await deleteValueInIndex(`index:person:lastname`, id);
+    await deleteValueInIndex(`index:person:email`, id);
+    await deleteValueInIndex(`index:person:telephone`, id);
     await deleteValueInIndex(`index:person:address`, id);
     await deleteValueInIndex(`index:person:city`, id);
     await deleteValueInIndex(`index:person:country`, id);

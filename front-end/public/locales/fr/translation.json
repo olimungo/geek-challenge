@@ -1,14 +1,21 @@
 {
     "header": {
-        "title": "challengeDeOufs",
-        "homepage": "Page d'accueil",
+        "title": "challengeDeOufs"
+    },
+    "menu": {
+        "homepage": "Accueil",
         "people": "Personnes",
-        "about": "A propos de nous",
-        "people-factory": "Usine à personnes"
+        "factory": "Usine",
+        "about": "A propos",
+        "more": "Plus",
+        "brol": "Brol",
+        "trucs": "Trucs",
+        "carabistouilles": "Carabistouilles"
     },
     "homepage": {
-        "hero": "Qui est le héro ?",
-        "get-started": "Démarrez"
+        "hero": "Héros ou zéro ?",
+        "description": "Vought International est la faction antagoniste globale des The Boys. Un conglomérat américain de plusieurs milliards de dollars dirigé par le PDG Stan Edgar et précédemment dirigé par Madelyn Stillwell, ancienne vice-présidente. La société est célèbre pour la fondation de The Seven et la gestion de la population mondiale de Supes sous licence. Elle s'est révélée assez corrompue et corporatiste, dans le seul but de devenir le monde dominant.",
+        "get-started": "Rejoignez Vought International"
     },
     "about": {
         "us": "A propos de nous"
@@ -22,6 +29,8 @@
             "title": "MODIFIER UNE PERSONNE",
             "firstname": "Prénom",
             "lastname": "Nom",
+            "telephone": "Téléphone",
+            "email": "Email",
             "address": "Adresse",
             "city": "Ville",
             "country": "Pays",

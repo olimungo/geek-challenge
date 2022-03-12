@@ -1,14 +1,21 @@
 {
     "header": {
-        "title": "geekChallenge",
-        "homepage": "Homepage",
+        "title": "geekChallenge"
+    },
+    "menu": {
+        "homepage": "Home",
         "people": "People",
-        "about": "About us",
-        "people-factory": "People factory"
+        "factory": "Factory",
+        "about": "About",
+        "more": "More",
+        "brol": "Mess",
+        "trucs": "Stuffs",
+        "carabistouilles": "Bullshits"
     },
     "homepage": {
-        "hero": "Who's the hero?",
-        "get-started": "Get started"
+        "hero": "Hero or zero?",
+        "description": "Vought International is the overarching antagonistic faction of the The Boys. An American multi-billion[1] dollar conglomerative led by CEO Stan Edgar and previously managed by Madelyn Stillwell, former Vice President. The company is famous for the founding of The Seven and managing the global population of licensed Supes. They have been shown to be quite corrupt and corporatist, with the only goal of becoming the world dominant.",
+        "get-started": "Join Vought International"
     },
     "about": {
         "us": "About us"
@@ -22,6 +29,8 @@
             "title": "EDIT A PERSON",
             "firstname": "First name",
             "lastname": "Last name",
+            "telephone": "Phone",
+            "email": "Email",
             "address": "Address",
             "city": "City",
             "country": "Country",
@@ -32,7 +41,7 @@
             "range-label": "Number of people to generate",
             "with-avatar": "With avatar?",
             "generate": "Generate",
-            "generate-message": "Genration in progress...",
+            "generate-message": "Generation in progress...",
             "empty-db": "Empty the database",
             "empty": "Empty",
             "empty-message": "Deletion in progress..."

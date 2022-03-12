@@ -9,26 +9,11 @@ body {
         'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
 
-/* button {
-    margin-top: 2rem;
-    padding: 0.5rem 1rem;
-    background-color: #325674;
-    color: aliceblue;
-    font-size: 1.3rem;
-    border: none;
-    border-radius: 0.4rem;
+#root {
+    height: 100%;
 }
-
-label {
-    font-size: 1.3rem;
-}
-
-input {
-    height: 2rem;
-    font-size: 1.3rem;
-    border-radius: 15rem;
-    border: none;
-    padding: 0.2rem 1rem;
-} */

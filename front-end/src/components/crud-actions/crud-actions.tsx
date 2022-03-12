@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { MdArrowBack, MdCheck, MdDelete } from 'react-icons/md';
 import { ConfirmButton } from 'components';
+import { ResponsiveButton } from 'components/responsive';
 
 type Props = {
     showDelete?: boolean;
@@ -20,33 +21,36 @@ export function CrudActions(props: Props) {
     return (
         <div>
             <div className="justify-between card-actions">
-                <button
-                    className="btn btn-sm sm:btn-md"
-                    type="button"
-                    onClick={onCancel}
-                >
-                    <MdArrowBack size="1.3rem" className="mr-2" />{' '}
-                    {t('crud-actions.cancel')}
-                </button>
+                <div className="mr-2">
+                    <ResponsiveButton
+                        icon={MdArrowBack}
+                        label={t('crud-actions.cancel')}
+                        iconPosition="left"
+                        size="md"
+                        onClick={onCancel}
+                    />
+                </div>
 
                 <div className="flex items-center">
                     {showDelete && (
                         <div className="mr-5">
                             <ConfirmButton
                                 label={t('crud-actions.delete')}
-                                icon={<MdDelete size={'1.3rem'} />}
+                                icon={MdDelete}
                                 onConfirm={onDelete}
+                                className="btn-secondary"
                             />
                         </div>
                     )}
 
-                    <button
-                        className="btn btn-sm sm:btn-md btn-primary"
-                        type="submit"
-                    >
-                        <MdCheck size="1.3rem" className="mr-2" />{' '}
-                        {t('crud-actions.save')}
-                    </button>
+                    <ResponsiveButton
+                        icon={MdCheck}
+                        label={t('crud-actions.save')}
+                        iconPosition="left"
+                        size="md"
+                        submitButton={true}
+                        className="btn-primary"
+                    />
                 </div>
             </div>
         </div>

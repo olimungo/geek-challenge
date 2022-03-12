@@ -1,48 +1,48 @@
 import { useNavigate } from 'react-router-dom';
+import { ResponsiveIcon } from 'components';
+import { SectionGroup } from 'models';
 import { useTranslation } from 'react-i18next';
-import { MdMenu } from 'react-icons/md';
 
-type Props = {};
+type Props = { sectionGroups: SectionGroup[] };
 
 export function Menu(props: Props) {
-    const { t } = useTranslation();
+    const { sectionGroups } = props;
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
-        <div className="">
-            <div className="dropdown dropdown-hover z-40">
-                <label
-                    tabIndex={0}
-                    className="btn btn-ghost btn-circle flex mr-7"
-                >
-                    <MdMenu size="1.5rem" />
-                </label>
+        <div className="bg-base-300 h-full flex justify-center overflow-auto">
+            <div className="w-8/12 md:w-10/12 mt-10">
+                <h1 className="text-2xl xs:text-3xl md:text-4xl mb-3 md:mb-5 md:hidden">
+                    Menu
+                </h1>
 
-                <ul
-                    tabIndex={0}
-                    className="p-2 shadow menu menu-compact dropdown-content bg-base-300 rounded-md w-52"
-                >
-                    <li>
-                        <div onClick={() => navigate('/home')}>
-                            {t('header.homepage')}
-                        </div>
-                    </li>
-                    <li>
-                        <div onClick={() => navigate('/people')}>
-                            {t('header.people')}
-                        </div>
-                    </li>
-                    <li>
-                        <div onClick={() => navigate('/people/factory')}>
-                            {t('header.people-factory')}
-                        </div>
-                    </li>
-                    <li>
-                        <div onClick={() => navigate('/about')}>
-                            {t('header.about')}
-                        </div>
-                    </li>
-                </ul>
+                {sectionGroups.map((sectionGroup) => (
+                    <div key={sectionGroup.label}>
+                        <h2 className="text-lg xs:text-2xl text-slate-400">
+                            {t(sectionGroup.label)}
+                        </h2>
+
+                        <ul tabIndex={0} className="p-2 menu menu-compact">
+                            {sectionGroup.sections.map((section) => (
+                                <li key={section.label} className="flex">
+                                    <div
+                                        className="text-base sm:text-md"
+                                        onClick={() => navigate(section.uri)}
+                                    >
+                                        <ResponsiveIcon
+                                            icon={section.icon}
+                                            className="text-slate-400"
+                                        />
+                                        {t(section.label)}
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+
+                <div className="pb-24 md:hidden"></div>
             </div>
         </div>
     );

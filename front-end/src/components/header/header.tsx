@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ImLab } from 'react-icons/im';
-import { LanguageSelector, Menu } from 'components';
+import { LanguageSelector } from 'components';
 import { usePeopleStore } from 'hooks';
 
 type Props = {};
@@ -34,15 +34,13 @@ export function Header(props: Props) {
     }, [location.pathname, t]);
 
     return (
-        <div className="navbar bg-base-100 shadow-xl rounded-box fixed top-0 z-50">
+        <div className="navbar bg-base-100 shadow-xl rounded-box m-0 p-0 fixed top-0 z-50">
             <div className="navbar-start">
-                <Menu />
-
                 <div className="flex items-center">
-                    <ImLab size="1.3rem" className="mr-3" />
+                    <ImLab size="1.3rem" className="mx-4 sm:mx-5" />
 
                     {displayBrand && (
-                        <label className="normal-case text-2xl">
+                        <label className="normal-case text-lg sm:text-2xl">
                             {t('header.title')}
                         </label>
                     )}
@@ -50,11 +48,11 @@ export function Header(props: Props) {
             </div>
 
             <div className="navbar-center">
-                <div className="text-xl text-slate-500 flex items-center">
-                    {title}
+                <div className="text-slate-500 flex items-center">
+                    <div className="text-lg xm:text-xl">{title}</div>
 
                     {displayCount && (
-                        <div className="badge badge-secondary ml-2">
+                        <div className="badge badge-sm sm:badge-md badge-secondary ml-2">
                             {people.length}
                         </div>
                     )}

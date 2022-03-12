@@ -2,33 +2,13 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MdSearch, MdClose } from 'react-icons/md';
 import { usePeopleStore } from 'hooks';
+import { ResponsiveIcon } from 'components';
 
 export function SearchBar() {
     const { t } = useTranslation();
     const { limit, setLimit, pattern, setPattern, getPeople, searchPeople } =
         usePeopleStore();
-    const [size, setSize] = useState(checkSize());
     const [showReset, setShowReset] = useState(pattern !== '' ? true : false);
-
-    function checkSize() {
-        if (window.innerWidth < 640) {
-            return '1.3rem';
-        } else {
-            return '1.9rem';
-        }
-    }
-
-    useEffect(() => {
-        function resize() {
-            setSize(checkSize());
-        }
-
-        window.addEventListener('resize', resize);
-
-        return () => {
-            window.removeEventListener('resize', resize);
-        };
-    }, []);
 
     useEffect(() => {
         setShowReset(pattern !== '');
@@ -49,17 +29,19 @@ export function SearchBar() {
     };
 
     return (
-        <form onSubmit={handleSearch} className="fixed z-40">
-            <div className="p-[.2rem] sm:p-1 bg-slate-400 rounded-xl">
-                <MdSearch
-                    size={size}
-                    className="absolute top-2.5 left-2 sm:top-3.5 sm:left-3.5 text-slate-400 search-bar-size"
-                />
+        <form
+            onSubmit={handleSearch}
+            className="fixed w-10/12 sm:w-[25rem] z-40"
+        >
+            <div className="p-2 rounded-xl shadow-lg bg-base-300 border border-slate-600">
+                <div className="absolute top-3.5 left-3.5 search-bar-size">
+                    <ResponsiveIcon icon={MdSearch} />
+                </div>
 
                 <input
                     type="text"
                     placeholder={t('search-bar.placeholder')}
-                    className="input input-sm sm:input w-72 sm:w-96 px-8 sm:px-14 sm:text-xl"
+                    className="input input-md text-xl bg-slate-600 text-slate-900 w-full px-8 sm:px-14 sm:text-xl"
                     value={pattern}
                     onChange={(event) =>
                         handlePatternChange(event.target.value)
@@ -72,16 +54,18 @@ export function SearchBar() {
                         className="btn btn-ghost btn-circle btn-xs sm:btn-sm absolute top-2 right-2 sm:top-3"
                         onClick={handleReset}
                     >
-                        <MdClose size={size} className=" text-slate-400" />
+                        <div className="">
+                            <ResponsiveIcon icon={MdClose} />
+                        </div>
                     </button>
                 )}
 
-                <div className="flex items-center justify-between mx-1">
-                    <span className="text-slate-600 sm:text-lg">Limit</span>
+                <div className="flex items-center justify-between mx-1 mt-2">
+                    <span className="text-slate-400 text-xl">Limit</span>
 
                     <div className="form-control ">
                         <label className="label cursor-pointer">
-                            <span className="label-text text-slate-600 mr-1 sm:mr-2 sm:text-lg">
+                            <span className="label-text text-slate-400 mr-1 text-xl">
                                 100
                             </span>
                             <input
@@ -96,7 +80,7 @@ export function SearchBar() {
 
                     <div className="form-control ">
                         <label className="label cursor-pointer">
-                            <span className="label-text text-slate-600 mr-1 sm:mr-2 sm:text-lg">
+                            <span className="label-text text-slate-400 mr-1 text-xl">
                                 500
                             </span>
                             <input
@@ -111,7 +95,7 @@ export function SearchBar() {
 
                     <div className="form-control ">
                         <label className="label cursor-pointer">
-                            <span className="label-text text-slate-600 mr-1 sm:mr-2 sm:text-lg">
+                            <span className="label-text text-slate-400 mr-1 text-xl">
                                 All
                             </span>
                             <input

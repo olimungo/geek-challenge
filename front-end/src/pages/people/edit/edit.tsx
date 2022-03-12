@@ -6,11 +6,14 @@ import { CrudActions } from 'components';
 import { useTranslation } from 'react-i18next';
 import { usePeopleStore } from 'hooks';
 import { backEnd } from 'services';
+import { ResponsiveButton } from 'components/responsive';
 
 const defaultPerson: Person = {
     id: 'new',
     firstname: '',
     lastname: '',
+    telephone: '',
+    email: '',
     address: '',
     city: '',
     country: '',
@@ -78,11 +81,11 @@ export function PeopleEdit() {
         <form
             ref={form}
             id="form"
-            className="flex flex-col items-center pt-5 sm:pt-16"
+            className="flex flex-col items-center pt-5 sm:pt-16 mb-20"
             onSubmit={handleSubmit}
         >
-            <div className="card w-11/12 sm:w-[37rem] bg-base-100 card-compact shadow-xl">
-                <div className="bg-slate-600">
+            <div className="card w-11/12 sm:w-[37rem] bg-slate-600 card-compact shadow-xl">
+                <div className="bg-slate-500">
                     <div className="my-5 mx-7 flex flex-col">
                         <div className="avatar mb-8">
                             <div className="w-24 rounded-full">
@@ -95,7 +98,7 @@ export function PeopleEdit() {
                         </div>
                         <div className="mb-3">
                             <label
-                                className="w-[7rem] inline-block"
+                                className="w-24 text-lg inline-block"
                                 htmlFor="firstname"
                             >
                                 {t('people.edit.firstname') + ' '}
@@ -104,7 +107,7 @@ export function PeopleEdit() {
 
                             <input
                                 name="firstname"
-                                className="input input-bordered w-full max-w-xs"
+                                className="input input-md input-bordered w-full max-w-xs"
                                 type="text"
                                 value={person.firstname}
                                 onChange={handleInputChange}
@@ -114,7 +117,7 @@ export function PeopleEdit() {
 
                         <div className="mb-3">
                             <label
-                                className="w-[7rem] inline-block"
+                                className="w-24 text-lg inline-block"
                                 htmlFor="lastname"
                             >
                                 {t('people.edit.lastname') + ' '}
@@ -123,7 +126,7 @@ export function PeopleEdit() {
 
                             <input
                                 name="lastname"
-                                className="input input-bordered w-full max-w-xs"
+                                className="input input-md input-bordered w-full max-w-xs"
                                 type="text"
                                 value={person.lastname}
                                 onChange={handleInputChange}
@@ -133,7 +136,43 @@ export function PeopleEdit() {
 
                         <div className="mb-3">
                             <label
-                                className="w-[7rem] inline-block"
+                                className="w-24 text-lg inline-block"
+                                htmlFor="telephone"
+                            >
+                                {t('people.edit.telephone') + ' '}
+                            </label>
+
+                            <input
+                                name="telephone"
+                                className="input input-md input-bordered w-full max-w-xs"
+                                type="text"
+                                value={person.telephone}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <label
+                                className="w-24 text-lg inline-block"
+                                htmlFor="email"
+                            >
+                                {t('people.edit.email') + ' '}
+                            </label>
+
+                            <input
+                                name="email"
+                                className="input input-md input-bordered w-full max-w-xs"
+                                type="text"
+                                value={person.email}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <label
+                                className="w-24 text-lg inline-block"
                                 htmlFor="address"
                             >
                                 {t('people.edit.address')}
@@ -141,7 +180,7 @@ export function PeopleEdit() {
 
                             <input
                                 name="address"
-                                className="input input-bordered w-full max-w-xs"
+                                className="input input-md input-bordered w-full max-w-xs"
                                 type="text"
                                 value={person.address}
                                 onChange={handleInputChange}
@@ -150,7 +189,7 @@ export function PeopleEdit() {
 
                         <div className="mb-3">
                             <label
-                                className="w-[7rem] inline-block"
+                                className="w-24 text-lg inline-block"
                                 htmlFor="city"
                             >
                                 {t('people.edit.city')}
@@ -158,7 +197,7 @@ export function PeopleEdit() {
 
                             <input
                                 name="city"
-                                className="input input-bordered w-full max-w-xs"
+                                className="input input-md input-bordered w-full max-w-xs"
                                 type="text"
                                 value={person.city}
                                 onChange={handleInputChange}
@@ -167,7 +206,7 @@ export function PeopleEdit() {
 
                         <div className="mb-3">
                             <label
-                                className="w-[7rem] inline-block"
+                                className="w-24 text-lg inline-block"
                                 htmlFor="country"
                             >
                                 {t('people.edit.country')}
@@ -175,7 +214,7 @@ export function PeopleEdit() {
 
                             <input
                                 name="country"
-                                className="input input-bordered w-full max-w-xs"
+                                className="input input-md input-bordered w-full max-w-xs"
                                 type="text"
                                 value={person.country}
                                 onChange={handleInputChange}
@@ -188,7 +227,7 @@ export function PeopleEdit() {
                                     <span className="indicator-item badge badge-success"></span>
                                 )}
 
-                                <label className="btn btn-sm">
+                                <label className="btn btn-md">
                                     <input
                                         type="file"
                                         className="hidden"

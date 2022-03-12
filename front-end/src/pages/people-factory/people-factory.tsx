@@ -14,7 +14,7 @@ export function PeopleFactory() {
     const { createPeople, deletePeople } = usePeopleStore();
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center pt-20">
             <div className="card w-96 sm:w-[40rem] bg-base-100 shadow-xl mb-10">
                 <div className="card-body p-0">
                     <h1 className="text-slate-700 text-xl bg-slate-400 px-8 py-5">
@@ -88,7 +88,7 @@ export function PeopleFactory() {
                             <div className="card-actions justify-end">
                                 <ConfirmButton
                                     label={t('people.factory.generate')}
-                                    icon={<HiDatabase size={'1.3rem'} />}
+                                    icon={HiDatabase}
                                     onConfirm={() => {
                                         setShowGenerateMessage(true);
                                         createPeople(count, withAvatar);
@@ -124,7 +124,7 @@ export function PeopleFactory() {
                         <div className="card-actions">
                             <ConfirmButton
                                 label={t('people.factory.empty')}
-                                icon={<MdDeleteOutline size={'1.3rem'} />}
+                                icon={MdDeleteOutline}
                                 onConfirm={() => {
                                     setShowDeleteMessage(true);
                                     deletePeople();

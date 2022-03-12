@@ -29,6 +29,8 @@ function defineSearch(app: Express) {
         const indices = [
             'index:person:firstname',
             'index:person:lastname',
+            'index:person:telephone',
+            'index:person:email',
             'index:person:address',
             'index:person:city',
             'index:person:country',
