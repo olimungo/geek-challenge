@@ -24,7 +24,7 @@
         "zustand": "^3.7.1"
     },
     "config": {
-        "rpi_version": "0.13.0"
+        "rpi_version": "0.14.0"
     },
     "scripts": {
         "start": "react-scripts start",
