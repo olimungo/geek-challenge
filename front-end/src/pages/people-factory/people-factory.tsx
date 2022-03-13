@@ -14,8 +14,8 @@ export function PeopleFactory() {
     const { createPeople, deletePeople } = usePeopleStore();
 
     return (
-        <div className="flex flex-col items-center pt-20">
-            <div className="card w-96 sm:w-[40rem] bg-base-100 shadow-xl mb-10">
+        <div className="flex flex-col items-center pt-10">
+            <div className="card w-10/12 md:w-[30rem] bg-base-100 shadow-xl mb-10">
                 <div className="card-body p-0">
                     <h1 className="text-slate-700 text-xl bg-slate-400 px-8 py-5">
                         {t('people.factory.range-label')}
@@ -93,6 +93,7 @@ export function PeopleFactory() {
                                         setShowGenerateMessage(true);
                                         createPeople(count, withAvatar);
                                     }}
+                                    className="btn-primary"
                                 />
                             </div>
                         </div>
@@ -100,7 +101,7 @@ export function PeopleFactory() {
                 </div>
             </div>
 
-            <div className="card w-96 sm:w-[40rem] bg-base-100 shadow-xl">
+            <div className="card w-10/12 md:w-[30rem] bg-base-100 shadow-xl mb-24">
                 <div className="card-body p-0">
                     <h1 className="text-slate-700 text-xl bg-slate-400 px-8 py-5">
                         {t('people.factory.empty-db')}
@@ -129,6 +130,7 @@ export function PeopleFactory() {
                                     setShowDeleteMessage(true);
                                     deletePeople();
                                 }}
+                                className="btn-primary"
                             />
                         </div>
                     </div>
