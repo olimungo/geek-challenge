@@ -14,7 +14,7 @@ function App() {
                 <SideMenu />
 
                 <div className="mt-16 w-full">
-                    <div className="h-full overflow-auto">
+                    <div className="h-full">
                         <Routes>
                             <Route path="/people" element={<PeopleList />} />
                             <Route

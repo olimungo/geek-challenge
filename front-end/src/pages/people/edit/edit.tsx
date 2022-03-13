@@ -6,7 +6,6 @@ import { CrudActions } from 'components';
 import { useTranslation } from 'react-i18next';
 import { usePeopleStore } from 'hooks';
 import { backEnd } from 'services';
-import { ResponsiveButton } from 'components/responsive';
 
 const defaultPerson: Person = {
     id: 'new',
@@ -81,10 +80,10 @@ export function PeopleEdit() {
         <form
             ref={form}
             id="form"
-            className="flex flex-col items-center pt-5 sm:pt-16 mb-20"
+            className="flex flex-col items-center pt-5 sm:pt-16"
             onSubmit={handleSubmit}
         >
-            <div className="card w-11/12 sm:w-[37rem] bg-slate-600 card-compact shadow-xl">
+            <div className="card w-11/12 sm:w-[33rem] bg-slate-600 card-compact shadow-xl mb-20">
                 <div className="bg-slate-500">
                     <div className="my-5 mx-7 flex flex-col">
                         <div className="avatar mb-8">

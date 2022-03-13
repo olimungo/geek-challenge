@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconType } from 'react-icons/lib';
-import { ResponsiveButton, ResponsiveIcon } from 'components/responsive';
+import { ResponsiveButton } from 'components/responsive';
 import { RiCheckDoubleFill } from 'react-icons/ri';
 
 type Props = {

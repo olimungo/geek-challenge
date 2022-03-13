@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MdLanguage, MdArrowDropDown } from 'react-icons/md';
+import { MdArrowDropDown } from 'react-icons/md';
 import { languages } from 'models';
 import { ResponsiveIcon } from 'components';
 
