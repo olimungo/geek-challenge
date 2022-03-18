@@ -4,10 +4,8 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-# RUN npm ci --only=production
-RUN npm i
+RUN npm ci --only=production
 
-COPY build scripts
-COPY scripts/assets scripts/assets
+COPY build scripts/assets scripts/
 
 CMD [ "npm", "run", "start-prod" ]

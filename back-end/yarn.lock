@@ -155,13 +155,6 @@
   "resolved" "https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.4.tgz"
   "version" "1.2.4"
 
-"@types/redis@^4.0.11":
-  "integrity" "sha512-bI+gth8La8Wg/QCR1+V1fhrL9+LZUSWfcqpOj2Kc80ZQ4ffbdL173vQd5wovmoV9i071FU9oP2g6etLuEwb6Rg=="
-  "resolved" "https://registry.npmjs.org/@types/redis/-/redis-4.0.11.tgz"
-  "version" "4.0.11"
-  dependencies:
-    "redis" "*"
-
 "@types/serve-static@*":
   "integrity" "sha512-nCkHGI4w7ZgAdNkrEu0bv+4xNV/XDqW+DydknebMOQwkpDGx8G+HTlj7R7ABI8i8nKxVw0wtKPi1D+lPOkh4YQ=="
   "resolved" "https://registry.npmjs.org/@types/serve-static/-/serve-static-1.13.10.tgz"
@@ -608,11 +601,6 @@
   "integrity" "sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac="
   "resolved" "https://registry.npmjs.org/fresh/-/fresh-0.5.2.tgz"
   "version" "0.5.2"
-
-"fsevents@~2.3.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
 
 "generic-pool@3.8.2":
   "integrity" "sha512-nGToKy6p3PAbYQ7p1UlWl6vSPwfwU6TMSWK7TTu+WUY4ZjyZQGniGGt2oNVvyNSpyZYSB43zMXVLcBm08MTMkg=="
@@ -1092,7 +1080,7 @@
   dependencies:
     "redis-errors" "^1.0.0"
 
-"redis@*", "redis@^4.0.2":
+"redis@^4.0.2":
   "integrity" "sha512-Ip1DJ/lwuvtJz9AZ6pl1Bv33fWzk5d3iQpGzsXpi04ErkT4fq0pfGOm4k/p9DHmPGieEIOWvJ9xmIeQMooLybg=="
   "resolved" "https://registry.npmjs.org/redis/-/redis-4.0.2.tgz"
   "version" "4.0.2"

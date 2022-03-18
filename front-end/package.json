@@ -24,12 +24,13 @@
         "zustand": "^3.7.1"
     },
     "config": {
-        "rpi_version": "0.16.0"
+        "version": "0.16.1"
     },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build; docker build -t olimungo/geek-front-end .",
-        "build-rpi": "react-scripts build; docker buildx build --platform linux/arm/v7 -t olimungo/geek-front-end:$npm_package_config_rpi_version --push .",
+        "push-rpi": "react-scripts build; docker buildx build --platform linux/arm/v7 -t olimungo/geek-front-end:$npm_package_config_version --push .",
+        "push-linux": "react-scripts build; docker build -t olimungo/geek-front-end:$npm_package_config_version .; docker push olimungo/geek-front-end:$npm_package_config_version",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
