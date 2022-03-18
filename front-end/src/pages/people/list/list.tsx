@@ -19,7 +19,7 @@ export function PeopleList() {
         <div className="flex flex-col items-center pt-3 mb-20 sm:mb-12">
             <SearchBar />
 
-            <ul className="w-11/12 xs:w-96 md:w-[31rem] mt-24 overflow-scroll">
+            <ul className="w-11/12 xs:w-96 md:w-[31rem] mt-24">
                 {people.map((person) => {
                     return (
                         <li key={person.id}>
