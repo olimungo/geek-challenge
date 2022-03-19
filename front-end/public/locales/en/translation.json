@@ -1,6 +1,6 @@
 {
     "header": {
-        "title": "geekChallenge"
+        "title": "GeekChallenge"
     },
     "menu": {
         "homepage": "Home",
@@ -10,7 +10,17 @@
         "more": "More",
         "brol": "Mess",
         "trucs": "Stuffs",
-        "carabistouilles": "Bullshits"
+        "carabistouilles": "Bullshits",
+        "page-not-found": "Page not found",
+        "alarm": "Alarm",
+        "favorite": "Favorites",
+        "face": "Face",
+        "graph": "Graph",
+        "hand": "Hand",
+        "movie": "Movie",
+        "radio": "Radio",
+        "mail": "Mail",
+        "tape": "Tape"
     },
     "homepage": {
         "hero": "Hero or zero?",

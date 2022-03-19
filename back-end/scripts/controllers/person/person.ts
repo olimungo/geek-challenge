@@ -10,12 +10,14 @@ import {
     getPeople,
     getIdsFromPattern,
     deletePeople as deletePeople,
+    countPeople,
 } from '../../services';
 
 export function defineRoutes(app: Express) {
     defineSearch(app);
     definePostAvatar(app);
     defineGetAvatar(app);
+    defineCountPeople(app);
     defineGetPeople(app);
     defineDeletePeople(app);
     defineCreatePeople(app);
@@ -112,7 +114,17 @@ function defineDeletePerson(app: Express) {
 function defineGetPeople(app: Express) {
     app.get('/people', async (req, res) => {
         const query: any = req.query;
-        return res.send(JSON.stringify(await getPeople(Number(query.limit))));
+        return res.send(
+            JSON.stringify(
+                await getPeople(Number(query.from), Number(query.recordsCount))
+            )
+        );
+    });
+}
+
+function defineCountPeople(app: Express) {
+    app.get('/people/count', async (req, res) => {
+        return res.send(JSON.stringify(await countPeople()));
     });
 }
 

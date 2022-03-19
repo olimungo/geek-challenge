@@ -1,5 +1,19 @@
 import { IconType } from 'react-icons';
-import { MdHome, MdPeople, MdInfoOutline, MdMoreHoriz } from 'react-icons/md';
+import {
+    MdHome,
+    MdPeople,
+    MdInfoOutline,
+    MdMoreHoriz,
+    MdBugReport,
+    MdAlarm,
+    MdFace,
+    MdPanTool,
+    MdLeaderboard,
+    MdTheaters,
+    MdRadio,
+    MdEmail,
+    MdVoicemail,
+} from 'react-icons/md';
 import { RiBuilding3Fill } from 'react-icons/ri';
 
 export type Section = {
@@ -36,11 +50,65 @@ const sectionsPeople: Section[] = [
     },
 ];
 
+const sectionsBrol: Section[] = [
+    {
+        label: 'menu.page-not-found',
+        icon: MdBugReport,
+        uri: '/page-not-found',
+    },
+];
+
+const sectionsTrucs: Section[] = [
+    {
+        label: 'menu.alarm',
+        icon: MdAlarm,
+        uri: '/alarm',
+    },
+    {
+        label: 'menu.face',
+        icon: MdFace,
+        uri: '/alarm',
+    },
+    {
+        label: 'menu.graph',
+        icon: MdLeaderboard,
+        uri: '/alarm',
+    },
+    {
+        label: 'menu.hand',
+        icon: MdPanTool,
+        uri: '/alarm',
+    },
+];
+
+const sectionsCarabistouilles: Section[] = [
+    {
+        label: 'menu.movie',
+        icon: MdTheaters,
+        uri: '/favorite',
+    },
+    {
+        label: 'menu.radio',
+        icon: MdRadio,
+        uri: '/favorite',
+    },
+    {
+        label: 'menu.mail',
+        icon: MdEmail,
+        uri: '/favorite',
+    },
+    {
+        label: 'menu.tape',
+        icon: MdVoicemail,
+        uri: '/favorite',
+    },
+];
+
 export const sectionGroups: SectionGroup[] = [
     { label: 'menu.people', sections: sectionsPeople },
-    { label: 'menu.brol', sections: sectionsPeople },
-    { label: 'menu.trucs', sections: sectionsPeople },
-    { label: 'menu.carabistouilles', sections: sectionsPeople },
+    { label: 'menu.brol', sections: sectionsBrol },
+    { label: 'menu.trucs', sections: sectionsTrucs },
+    { label: 'menu.carabistouilles', sections: sectionsCarabistouilles },
 ];
 
 export type FooterSection = {

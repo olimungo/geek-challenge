@@ -1,25 +1,40 @@
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
-import { CardPerson, ResponsiveIcon, SearchBar } from 'components';
+import { CardPerson, ResponsiveIcon } from 'components';
 import { usePeopleStore } from 'hooks';
-import { useEffect } from 'react';
 
 export function PeopleList() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { people, getPeople } = usePeopleStore();
+    const { people, getPeople, getMorePeople } = usePeopleStore();
+    const ul = useRef<HTMLUListElement>(null);
 
     useEffect(() => {
         getPeople();
+
+        const onScroll = (event: any) => {
+            const { scrollTop, scrollHeight, clientHeight } =
+                event.target.scrollingElement;
+
+            if (scrollTop !== 0 && scrollTop + clientHeight === scrollHeight) {
+                getMorePeople();
+            }
+        };
+
+        document.addEventListener('scroll', onScroll);
+
+        return () => {
+            document.removeEventListener('scroll', onScroll);
+        };
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <div className="flex flex-col items-center pt-3 mb-20 sm:mb-12">
-            <SearchBar />
-
-            <ul className="w-11/12 xs:w-96 md:w-[31rem] mt-24">
+        <div className="flex flex-col items-center">
+            <ul ref={ul} className="w-11/12 xs:w-96 md:w-[31rem] mb-20 md:mb-0">
                 {people.map((person) => {
                     return (
                         <li key={person.id}>

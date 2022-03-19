@@ -1,11 +1,23 @@
-import { Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { About, Home, PeopleEdit, PeopleFactory, PeopleList } from 'pages';
+import { Suspense, useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import {
+    About,
+    Home,
+    PageNotFound,
+    PeopleEdit,
+    PeopleFactory,
+    PeopleList,
+} from 'pages';
 import { Footer, Header, Menu, SideMenu } from 'components';
 import { footerSections, sectionGroups } from 'models';
-import './App.css';
+import { usePeopleStore } from 'hooks';
 
 function App() {
+    const { countPeople } = usePeopleStore();
+    useEffect(() => {
+        countPeople();
+    }, [countPeople]);
+
     return (
         <Suspense fallback="...is loading">
             <Header />
@@ -32,6 +44,18 @@ function App() {
                             <Route path="/home" element={<Home />} />
                             <Route path="/about" element={<About />} />
                             <Route path="/" element={<Home />} />
+
+                            <Route
+                                path="/page-not-found"
+                                element={<PageNotFound />}
+                            />
+
+                            <Route
+                                path="*"
+                                element={
+                                    <Navigate to="/page-not-found" replace />
+                                }
+                            />
                         </Routes>
                     </div>
                 </div>

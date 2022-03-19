@@ -1,14 +1,30 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ResponsiveIcon } from 'components';
 import { SectionGroup } from 'models';
-import { useTranslation } from 'react-i18next';
+import { usePeopleStore } from 'hooks';
 
 type Props = { sectionGroups: SectionGroup[] };
 
 export function Menu(props: Props) {
     const { sectionGroups } = props;
     const navigate = useNavigate();
+    const location = useLocation();
     const { t } = useTranslation();
+    const { count } = usePeopleStore();
+
+    const isSeletect = (uri: string): boolean => {
+        if (uri === location.pathname) {
+            return true;
+        } else if (
+            uri === '/people' &&
+            location.pathname.match(/\/people\/\b(?!factory\b)\w+/g)
+        ) {
+            return true;
+        }
+
+        return false;
+    };
 
     return (
         <div className="bg-base-300 h-full flex justify-center overflow-auto">
@@ -25,16 +41,27 @@ export function Menu(props: Props) {
 
                         <ul tabIndex={0} className="p-2 menu menu-compact">
                             {sectionGroup.sections.map((section) => (
-                                <li key={section.label} className="flex">
-                                    <div
-                                        className="text-base sm:text-md"
-                                        onClick={() => navigate(section.uri)}
-                                    >
+                                <li
+                                    key={section.label}
+                                    className={`flex text-base sm:text-md ${
+                                        isSeletect(section.uri)
+                                            ? 'bg-base-100 rounded-md'
+                                            : ''
+                                    }`}
+                                    onClick={() => navigate(section.uri)}
+                                >
+                                    <div className="w-full">
                                         <ResponsiveIcon
                                             icon={section.icon}
                                             className="text-slate-400"
                                         />
                                         {t(section.label)}
+
+                                        {section.uri === '/people' && (
+                                            <div className="badge badge-sm badge-secondary mr-2">
+                                                {count}
+                                            </div>
+                                        )}
                                     </div>
                                 </li>
                             ))}

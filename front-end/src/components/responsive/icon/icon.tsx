@@ -44,6 +44,8 @@ export function ResponsiveIcon(props: Props) {
         return () => {
             window.removeEventListener('resize', resize);
         };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

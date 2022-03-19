@@ -2,34 +2,26 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ImLab } from 'react-icons/im';
-import { LanguageSelector } from 'components';
-import { usePeopleStore } from 'hooks';
+import { LanguageSelector, SearchBar } from 'components';
 
 type Props = {};
 
 export function Header(props: Props) {
     const { t } = useTranslation();
-    const { people } = usePeopleStore();
     const location = useLocation();
-    const [title, setTitle] = useState('');
-    const [displayCount, setDisplayCount] = useState(false);
     const [displayBrand, setDisplayBrand] = useState(false);
+    const [displaySearchBar, setDisplaySearchBar] = useState(false);
 
     useEffect(() => {
-        setTitle('');
-        setDisplayCount(false);
         setDisplayBrand(true);
+        setDisplaySearchBar(true);
 
-        if (location.pathname === '/people') {
-            setTitle(t('people.list.title'));
-            setDisplayCount(true);
+        if (location.pathname.match(/\/people\b(?!\/factory\b)/g)) {
             setDisplayBrand(false);
-        } else if (location.pathname === '/people/factory') {
-            setTitle(t('people.factory.title'));
-            setDisplayBrand(false);
-        } else if (location.pathname.match(/\/people\//g)) {
-            setTitle(t('people.edit.title'));
-            setDisplayBrand(false);
+        }
+
+        if (location.pathname !== '/people') {
+            setDisplaySearchBar(false);
         }
     }, [location.pathname, t]);
 
@@ -48,15 +40,7 @@ export function Header(props: Props) {
             </div>
 
             <div className="navbar-center">
-                <div className="text-slate-500 flex items-center">
-                    <div className="text-lg xm:text-xl">{title}</div>
-
-                    {displayCount && (
-                        <div className="badge badge-sm sm:badge-md badge-secondary ml-2">
-                            {people.length}
-                        </div>
-                    )}
-                </div>
+                {displaySearchBar && <SearchBar />}
             </div>
 
             <div className="navbar-end">

@@ -1,6 +1,6 @@
 {
     "header": {
-        "title": "challengeDeOufs"
+        "title": "ChallengeDeOufs"
     },
     "menu": {
         "homepage": "Accueil",
@@ -10,7 +10,17 @@
         "more": "Plus",
         "brol": "Brol",
         "trucs": "Trucs",
-        "carabistouilles": "Carabistouilles"
+        "carabistouilles": "Carabistouilles",
+        "page-not-found": "Page non trouvée",
+        "alarm": "Alarme",
+        "favorite": "Favori",
+        "face": "Visage",
+        "graph": "Graph",
+        "hand": "Main",
+        "movie": "Film",
+        "radio": "Radio",
+        "mail": "Mail",
+        "tape": "Cassette"
     },
     "homepage": {
         "hero": "Héros ou zéro ?",

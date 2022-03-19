@@ -6,8 +6,8 @@ export const getPerson = async (id: string) => {
     return fetch(`${backEnd}/people/${id}`).then((response) => response.json());
 };
 
-export const getPeople = (limit: number) => {
-    return fetch(`${backEnd}/people?limit=${limit}`)
+export const getPeople = (from: number, recordsCount: number) => {
+    return fetch(`${backEnd}/people?from=${from}&recordsCount=${recordsCount}`)
         .then((response) => response.json())
         .then((people: Person[]) => people.sort(sortPeople));
 };
@@ -52,4 +52,8 @@ export const createPeople = (count: number, withAvatar: boolean) => {
 
 export const deletePeople = () => {
     return fetch(`${backEnd}/people/delete`);
+};
+
+export const countPeople = () => {
+    return fetch(`${backEnd}/people/count`).then((response) => response.json());
 };
