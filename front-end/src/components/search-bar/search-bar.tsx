@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MdSearch, MdClose } from 'react-icons/md';
+import { MdSearch, MdClose, MdRefresh } from 'react-icons/md';
 import { usePeopleStore } from 'hooks';
 import { ResponsiveIcon } from 'components';
 
@@ -30,13 +30,19 @@ export function SearchBar() {
     };
 
     const handleReset = () => {
+        window.scrollTo({ top: 0 });
         setPattern('');
+        getPeople(true);
+    };
+
+    const handleRefresh = () => {
+        window.scrollTo({ top: 0 });
         getPeople(true);
     };
 
     return (
         <form onSubmit={handleSearch} className="relative w-10/12 sm:w-[25rem]">
-            <div className="absolute top-2.5 md:top-2 left-3 text-base-100">
+            <div className="absolute top-2.5 md:top-2 left-2.5 text-base-100">
                 <ResponsiveIcon icon={MdSearch} />
             </div>
 
@@ -51,11 +57,23 @@ export function SearchBar() {
             {showReset && (
                 <button
                     type="button"
-                    className="btn btn-ghost btn-circle btn-xs sm:btn-sm absolute top-1.5 md:top-1 right-2"
+                    className="btn btn-ghost btn-circle btn-xs sm:btn-sm absolute top-1.5 md:top-0.5 right-2"
                     onClick={handleReset}
                 >
                     <div className="text-base-100">
                         <ResponsiveIcon icon={MdClose} />
+                    </div>
+                </button>
+            )}
+
+            {!showReset && (
+                <button
+                    type="button"
+                    className="btn btn-ghost btn-circle btn-xs sm:btn-sm absolute top-1.5 md:top-0.5 right-2"
+                    onClick={handleRefresh}
+                >
+                    <div className="text-base-100">
+                        <ResponsiveIcon icon={MdRefresh} />
                     </div>
                 </button>
             )}

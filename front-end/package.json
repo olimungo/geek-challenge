@@ -24,14 +24,11 @@
         "web-vitals": "^2.1.0",
         "zustand": "^3.7.1"
     },
-    "config": {
-        "version": "0.16.1"
-    },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build; docker build -t olimungo/geek-front-end .",
-        "push-rpi": "react-scripts build; docker buildx build --platform linux/arm/v7 -t olimungo/geek-front-end:$npm_package_config_version --push .",
-        "push-linux": "react-scripts build; docker build -t olimungo/geek-front-end:$npm_package_config_version .; docker push olimungo/geek-front-end:$npm_package_config_version",
+        "push-rpi": "react-scripts build; docker buildx build --platform linux/arm/v7 -t olimungo/geek-front-end:$npm_config_target_version --push .",
+        "push-linux": "react-scripts build; docker build -t olimungo/geek-front-end:$npm_config_target_version .; docker push olimungo/geek-front-end:$npm_config_target_version",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },

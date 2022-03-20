@@ -3,6 +3,10 @@
     "version": "1.0.0",
     "description": "",
     "main": "server.ts",
+    "config": {
+        "front-end-version": "0.17.2",
+        "back-end-version": "0.17.2"
+    },
     "scripts": {
         "start": "docker system prune -f; docker-compose up -d",
         "stop": "docker-compose down; docker system prune -f",
@@ -13,8 +17,12 @@
         "build-front-end": "npm run build --prefix front-end",
         "start-local-containers": "docker system prune -f; npm run build; docker-compose -f docker-compose.test.yml up -d",
         "stop-local-containers": "docker-compose -f docker-compose.test.yml down; docker system prune -f",
-        "push-linux": "npm run push-linux --prefix back-end; npm run push-linux --prefix front-end",
-        "push-rpi": "npm run push-rpi --prefix back-end; npm run push-rpi --prefix front-end"
+        "push-linux": "npm run push-linux-front-end; npm run push-linux-back-end",
+        "push-linux-front-end": "npm run push-linux --prefix front-end --target_version=$npm_package_config_front_end_version",
+        "push-linux-back-end": "npm run push-linux --prefix back-end --target_version=$npm_package_config_back_end_version",
+        "push-rpi": "npm run push-rpi-front-end; npm run push-rpi-back-end",
+        "push-rpi-front-end": "npm run push-rpi --prefix front-end --target_version=$npm_package_config_front_end_version",
+        "push-rpi-back-end": "npm run push-rpi --prefix back-end --target_version=$npm_package_config_back_end_version"
     },
     "keywords": [],
     "author": "",

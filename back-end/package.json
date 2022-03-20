@@ -3,16 +3,13 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "config": {
-        "version": "0.16.1"
-    },
     "scripts": {
         "start": "nodemon scripts/server.ts",
         "start-prod": "nodemon scripts/server.js",
         "just-build": "tsc --build",
         "build": "tsc --build; docker build -t olimungo/geek-back-end .",
-        "push-rpi": "tsc --build; docker buildx build --platform linux/arm/v7 -t olimungo/geek-back-end:$npm_package_config_version --push .",
-        "push-linux": "tsc --build; docker build -t olimungo/geek-back-end:$npm_package_config_version .; docker push olimungo/geek-back-end:$npm_package_config_version",
+        "push-rpi": "tsc --build; docker buildx build --platform linux/arm/v7 -t olimungo/geek-back-end:$npm_config_target_version --push .",
+        "push-linux": "tsc --build; docker build -t olimungo/geek-back-end:$npm_config_target_version .; docker push olimungo/geek-back-end:$npm_config_target_version",
         "create-person": "ts-node scripts/mock-data/create-person.ts"
     },
     "keywords": [],
