@@ -4,8 +4,8 @@
     "description": "",
     "main": "server.ts",
     "config": {
-        "front-end-version": "0.17.2",
-        "back-end-version": "0.17.2"
+        "front-end-version": "0.18.0",
+        "back-end-version": "0.18.0"
     },
     "scripts": {
         "start": "docker system prune -f; docker-compose up -d",

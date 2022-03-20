@@ -13,7 +13,7 @@ export function Menu(props: Props) {
     const { t } = useTranslation();
     const { count } = usePeopleStore();
 
-    const isSeletect = (uri: string): boolean => {
+    const isSelected = (uri: string): boolean => {
         if (uri === location.pathname) {
             return true;
         } else if (
@@ -44,9 +44,8 @@ export function Menu(props: Props) {
                                 <li
                                     key={section.label}
                                     className={`flex text-base sm:text-md ${
-                                        isSeletect(section.uri)
-                                            ? 'bg-base-100 rounded-md'
-                                            : ''
+                                        isSelected(section.uri) &&
+                                        'bg-base-100 rounded-md'
                                     }`}
                                     onClick={() => navigate(section.uri)}
                                 >
