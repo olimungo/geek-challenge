@@ -8,7 +8,7 @@ import {
     PeopleFactory,
     PeopleList,
 } from 'pages';
-import { Footer, Header, Menu, SideMenu } from 'components';
+import { Footer, Header, HeaderTitle, Menu, SideMenu } from 'components';
 import { footerSections, sectionGroups } from 'models';
 import { usePeopleStore } from 'hooks';
 
@@ -20,7 +20,12 @@ function App() {
 
     return (
         <Suspense fallback="...is loading">
-            <Header />
+            <Header>
+                <HeaderTitle>
+                    <p>toto</p>
+                    <p>titi</p>
+                </HeaderTitle>
+            </Header>
 
             <div className="h-full flex">
                 <SideMenu />

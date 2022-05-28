@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ImLab } from 'react-icons/im';
 import { LanguageSelector, SearchBar } from 'components';
+import React from 'react';
 
 type Props = {};
-
-export function Header(props: Props) {
+export function Header(props: React.PropsWithChildren<Props>) {
     const { t } = useTranslation();
     const location = useLocation();
     const [displayBrand, setDisplayBrand] = useState(false);
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
+
+    const insertSlot = useSlots(props.children);
 
     useEffect(() => {
         setDisplayBrand(true);
@@ -39,6 +41,8 @@ export function Header(props: Props) {
                 </div>
             </div>
 
+            {insertSlot(HeaderTitle)}
+
             <div className="navbar-center">
                 {displaySearchBar && <SearchBar />}
             </div>
@@ -49,3 +53,16 @@ export function Header(props: Props) {
         </div>
     );
 }
+
+interface HeaderTitleProps {}
+export function HeaderTitle(props: React.PropsWithChildren<HeaderTitleProps>) {
+    return <div>{props.children}</div>;
+}
+
+let useSlots = function (children: ReactNode) {
+    let arr = React.Children.toArray(children);
+
+    return function (component: React.PropsWithChildren<any>) {
+        return arr.find((child) => (child as JSX.Element).type === component);
+    };
+};
